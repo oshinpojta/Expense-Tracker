@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Expense Tracker</title>
+    </head>
+    <body>
+
+            <h3> Choose Expense Amount : </h3>
+            <input type="number" name="amout" id="amount">
+            <h3> Choose A Description : </h3>
+            <input type="text" name="description" id="description">
+            <h3> Choose a Category : </h3>
+            <select name="category" id="category">
+                <option>Fuel</option>
+                <option>Movies</option>
+                <option>Household</option>
+                <option>Electricity</option>
+                <option>Food</option>
+            </select>
+            <input type="hidden" id="key" value="-1">
+            <button name="button" id="button">Add Expense</button>
+
+            <ul id="list">
+            </ul>
+            <script>
+                var amount = document.querySelector('#amount');
+                var description = document.getElementById('description');
+                var category = document.getElementById('category');
+                var list = document.getElementById('list');
+                var key = document.getElementById("key");
+                var button = document.getElementById('button');
+
+                window.addEventListener("DOMContentLoaded",loadStorage);
+                button.addEventListener("click",addExpense);
+
+                function addExpense(e){
+                    e.preventDefault();
+                    let amountVal = amount.value;
+                    let descriptionVal = description.value;
+                    let categoryVal = category.value;
+                    var li = document.createElement("li");
+                    var p = document.createElement("p");
+                    var deletebutton = document.createElement("button");
+                    var editbutton = document.createElement("button");
+                    p.innerHTML = amountVal+", "+descriptionVal+", "+categoryVal;
+                    deletebutton.textContent = "Delete Expense";
+                    deletebutton.addEventListener("click",deleteExpense);
+                    editbutton.textContent = "Edit Expense";
+                    editbutton.addEventListener("click",editExpense);
+                    li.appendChild(p);
+                    li.appendChild(deletebutton);
+                    li.appendChild(editbutton);
+                    li.id = localStorage.length+1;
+                    list.appendChild(li);
+                    const stringObj = JSON.stringify({"amount" : amountVal, "description" : descriptionVal, "category" : categoryVal});
+                    if(key.value==-1){
+                        localStorage.setItem(`${localStorage.length+1}`, stringObj);
+                    }else{
+                        localStorage.setItem(key.value,stringObj);
+                    }
+                    
+                }
+
+                function deleteExpense(e){
+                    e.preventDefault()
+                    console.log(e.target.parentNode.id);
+                    localStorage.removeItem(e.target.parentNode.id);
+                    e.target.parentNode.remove();
+                }
+
+                function editExpense(e){
+                    e.preventDefault();
+                    let currentli = e.target.parentNode;
+                    let obj = JSON.parse(localStorage.getItem(currentli.id));
+                    amount.value = obj.amount;
+                    description.value = obj.description;
+                    category.value = obj.category;
+                    key.value = currentli.id;
+                    e.target.parentNode.remove();
+                }
+
+                function loadStorage(e){
+                    if(localStorage.length<1){
+                        console.log(localStorage.length+" local storage")
+                        return;
+                    }else{
+                        for(let i=0;i<localStorage.length;i++){
+                            var obj = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                            let amountVal = obj.amount;
+                            let descriptionVal = obj.description;
+                            let categoryVal = obj.category;
+                            var li = document.createElement("li");
+                            var p = document.createElement("p");
+                            var deletebutton = document.createElement("button");
+                            var editbutton = document.createElement("button");
+                            p.innerHTML = amountVal+", "+descriptionVal+", "+categoryVal;
+                            deletebutton.textContent = "Delete Expense";
+                            deletebutton.addEventListener("click",deleteExpense);
+                            editbutton.textContent = "Edit Expense";
+                            editbutton.addEventListener("click",editExpense);
+                            li.appendChild(p);
+                            li.appendChild(deletebutton);
+                            li.appendChild(editbutton);
+                            li.id = localStorage.key(i);
+                            list.appendChild(li);
+                        }
+                    }
+                }
+            </script>
+    </body>
+</html>
