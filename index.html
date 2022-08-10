@@ -11,16 +11,17 @@
             <input type="text" name="description" id="description">
             <h3> Choose a Category : </h3>
             <select name="category" id="category">
-                <option>Fuel</option>
-                <option>Movies</option>
-                <option>Household</option>
-                <option>Electricity</option>
-                <option>Food</option>
+                <option value="Fuel">Fuel</option>
+                <option value="Movies">Movies</option>
+                <option value="Household">Household</option>
+                <option value="Electricity">Electricity</option>
+                <option value="Food">Food</option>
+                <option value="Other">Other</option>
             </select>
             <input type="hidden" id="hidden" value="">
             <button name="button" id="button">Add Expense</button>
 
-            <ul id="list">
+            <ul id="list" style="list-style: none;">
             </ul>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script src="script.js">

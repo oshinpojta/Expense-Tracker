@@ -1,28 +1,25 @@
-var amount = document.querySelector('#amount');
-var description = document.getElementById('description');
-var category = document.getElementById('category');
-var hidden = document.querySelector("#hidden")
-var list = document.getElementById('list');
-var button = document.getElementById('button');
+let amount = document.querySelector('#amount');
+let description = document.getElementById('description');
+let category = document.getElementById('category');
+let hidden = document.querySelector("#hidden")
+let list = document.getElementById('list');
+let button = document.getElementById('button');
 
-const baseURL = "https://crudcrud.com/api/7b06da3fa83a4518ab0b5cb7ed0d2dd0";
+const baseURL = "https://crudcrud.com/api/ed4ea7056f714552be6f0f12a2483a54";
 const expensesURL = "/expenses";
 
-window.addEventListener("DOMContentLoaded",loadExpenses);
-button.addEventListener("click",addExpense);
-
-function addExpense(e){
+let addExpense = async (e) => {
     e.preventDefault();
     const getPromise = async () => {
         const expensesObj = {"amount": amount.value, "description": description.value, "category" : category.value};
-        const returnedObj = {};
         if(hidden.value===""){
             return axios.post(baseURL+expensesURL, expensesObj);
         }else{
             return axios.put(baseURL+expensesURL+"/"+hidden.value, expensesObj)
         }
     }
-    getPromise().then((returnedObj)=>{
+    let returnedObj = await getPromise();
+    let display = (returnedObj)=>{
         console.log(returnedObj);
         console.log(returnedObj.data);
         let amountVal = amount.value;
@@ -30,6 +27,7 @@ function addExpense(e){
         let categoryVal = category.value;
         let li = document.createElement("li");
         let p = document.createElement("p");
+        p.className = "expenses-p"
         if(hidden.value===""){
             li.id = returnedObj.data._id;   //object - not array
         }else{
@@ -51,14 +49,15 @@ function addExpense(e){
         category.value = "";
         description.value = "";
         hidden.value = "";
-    }).catch((err)=>console.log("getPromise Error in Add Expense :- "+err));
+    }
+    display(returnedObj);
     
 }
 
-function deleteExpense(e){
+let deleteExpense = async (e) => {
     e.preventDefault()
     console.log(e.target.parentNode.id);
-    const returnedObj = axios.delete(baseURL+expensesURL+"/"+e.target.parentNode.id);
+    const returnedObj = await axios.delete(baseURL+expensesURL+"/"+e.target.parentNode.id);
     if(returnedObj.data.length===0){
         e.target.parentNode.remove();
     }else{
@@ -67,34 +66,22 @@ function deleteExpense(e){
     
 }
 
-function editExpense(e){
-    e.preventDefault();
-    let currentli = e.target.parentNode;
-    let stringList = getSeparatedValues(currentli.textContent);
-    amount.value = stringList[0];
-    description.value = stringList[1];
-    category.value = stringList[2].re;
-    hidden.value = currentli.id;
-    e.target.parentNode.remove();
-}
+let loadExpenses = async (e) => {
 
-function loadExpenses(e){
-    
-    const loadPromise = async () =>{
-        return axios.get(baseURL+expensesURL);
-    }
-    loadPromise().then((returnedObj)=>{
+    let returnedObj = await axios.get(baseURL+expensesURL);
+    let display = (returnedObj)=>{
         let data = returnedObj.data;  //array
         for(let i=0;i<data.length;i++){
-            var obj = data[i];
+            let obj = data[i];
             let amountVal = obj.amount;
             let descriptionVal = obj.description;
             let categoryVal = obj.category;
-            var li = document.createElement("li");
-            var p = document.createElement("p");
+            let li = document.createElement("li");
+            let p = document.createElement("p");
+            p.className = "expenses-p";
             li.id = obj._id;
-            var deletebutton = document.createElement("button");
-            var editbutton = document.createElement("button");
+            let deletebutton = document.createElement("button");
+            let editbutton = document.createElement("button");
             p.innerHTML = amountVal+", "+descriptionVal+", "+categoryVal;
             deletebutton.textContent = "Delete Expense";
             deletebutton.addEventListener("click",deleteExpense);
@@ -110,9 +97,22 @@ function loadExpenses(e){
             description.value = "";
             hidden.value = "";
         }
-    }).catch((err)=>console.log("load Expense Error :- "+ err));
+    }
+    display(returnedObj);
+}
 
-    
+function editExpense(e){
+    e.preventDefault();
+    if(hidden.value!=""){
+        document.getElementById(hidden.value).style.display = "initial";
+    }
+    let currentli = e.target.parentNode;
+    let stringList = getSeparatedValues(currentli.querySelector(".expenses-p").textContent);
+    amount.value = stringList[0];
+    description.value = stringList[1];
+    category.value = stringList[2];
+    hidden.value = currentli.id;
+    e.target.parentNode.style.display = "none";
 }
 
 
@@ -132,3 +132,7 @@ function getSeparatedValues(stringObj){
     }
     return stringList;
 }
+
+
+window.addEventListener("DOMContentLoaded",loadExpenses);
+button.addEventListener("click",addExpense);
