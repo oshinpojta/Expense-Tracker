@@ -5,23 +5,22 @@ let hidden = document.querySelector("#hidden")
 let list = document.getElementById('list');
 let button = document.getElementById('button');
 
-const baseURL = "https://crudcrud.com/api/ed4ea7056f714552be6f0f12a2483a54";
+const baseURL = "https://crudcrud.com/api/a37ed1e7f34748f581cf1a7d2e75d5fd";
 const expensesURL = "/expenses";
 
 let addExpense = async (e) => {
     e.preventDefault();
-    const getPromise = async () => {
-        const expensesObj = {"amount": amount.value, "description": description.value, "category" : category.value};
-        if(hidden.value===""){
-            return axios.post(baseURL+expensesURL, expensesObj);
-        }else{
-            return axios.put(baseURL+expensesURL+"/"+hidden.value, expensesObj)
+    try{
+
+        const getPromise = () => {
+            const expensesObj = {"amount": amount.value, "description": description.value, "category" : category.value};
+            if(hidden.value===""){
+                return axios.post(baseURL+expensesURL, expensesObj);
+            }else{
+                return axios.put(baseURL+expensesURL+"/"+hidden.value, expensesObj)
+            }
         }
-    }
-    let returnedObj = await getPromise();
-    let display = (returnedObj)=>{
-        console.log(returnedObj);
-        console.log(returnedObj.data);
+        let returnedObj = await getPromise();
         let amountVal = amount.value;
         let descriptionVal = description.value;
         let categoryVal = category.value;
@@ -44,32 +43,39 @@ let addExpense = async (e) => {
         li.appendChild(deletebutton);
         li.appendChild(editbutton);
         list.appendChild(li);
-
+    
         amount.value = "";
         category.value = "";
         description.value = "";
         hidden.value = "";
+
+    }catch(err){
+        console.log(err);
     }
-    display(returnedObj);
-    
 }
 
 let deleteExpense = async (e) => {
     e.preventDefault()
-    console.log(e.target.parentNode.id);
-    const returnedObj = await axios.delete(baseURL+expensesURL+"/"+e.target.parentNode.id);
-    if(returnedObj.data.length===0){
-        e.target.parentNode.remove();
-    }else{
-        console.log("Expense couldn't be deleted.");
+    try {
+        
+        console.log(e.target.parentNode.id);
+        const returnedObj = await axios.delete(baseURL+expensesURL+"/"+e.target.parentNode.id);
+        if(returnedObj.data.length===0){
+            e.target.parentNode.remove();
+        }else{
+            console.log("Expense couldn't be deleted.");
+        }
+
+    } catch (error) {
+        console.log(error);
     }
-    
 }
 
 let loadExpenses = async (e) => {
 
-    let returnedObj = await axios.get(baseURL+expensesURL);
-    let display = (returnedObj)=>{
+    try {
+
+        let returnedObj = await axios.get(baseURL+expensesURL);
         let data = returnedObj.data;  //array
         for(let i=0;i<data.length;i++){
             let obj = data[i];
@@ -97,22 +103,31 @@ let loadExpenses = async (e) => {
             description.value = "";
             hidden.value = "";
         }
+        
+    } catch (error) {
+        console.log(error);
     }
-    display(returnedObj);
 }
 
 function editExpense(e){
     e.preventDefault();
-    if(hidden.value!=""){
-        document.getElementById(hidden.value).style.display = "initial";
+
+    try {
+
+        if(hidden.value!=""){
+            document.getElementById(hidden.value).style.display = "initial";
+        }
+        let currentli = e.target.parentNode;
+        let stringList = getSeparatedValues(currentli.querySelector(".expenses-p").textContent);
+        amount.value = stringList[0];
+        description.value = stringList[1];
+        category.value = stringList[2];
+        hidden.value = currentli.id;
+        e.target.parentNode.style.display = "none";
+        
+    } catch (error) {
+        console.log(error);
     }
-    let currentli = e.target.parentNode;
-    let stringList = getSeparatedValues(currentli.querySelector(".expenses-p").textContent);
-    amount.value = stringList[0];
-    description.value = stringList[1];
-    category.value = stringList[2];
-    hidden.value = currentli.id;
-    e.target.parentNode.style.display = "none";
 }
 
 
