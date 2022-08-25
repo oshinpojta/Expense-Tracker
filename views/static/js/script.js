@@ -4,9 +4,9 @@ let category = document.getElementById('category');
 let hidden = document.querySelector("#hidden")
 let list = document.getElementById('list');
 let button = document.getElementById('button');
+const logout = document.getElementById("logout");
 
-const baseURL = "https://crudcrud.com/api/a37ed1e7f34748f581cf1a7d2e75d5fd";
-const expensesURL = "/expenses";
+let url = "http://localhost:4000";
 
 let addExpense = async (e) => {
     e.preventDefault();
@@ -15,9 +15,9 @@ let addExpense = async (e) => {
         const getPromise = () => {
             const expensesObj = {"amount": amount.value, "description": description.value, "category" : category.value};
             if(hidden.value===""){
-                return axios.post(baseURL+expensesURL, expensesObj);
+                return axios.post(url, expensesObj);
             }else{
-                return axios.put(baseURL+expensesURL+"/"+hidden.value, expensesObj)
+                return axios.put(url+"/"+hidden.value, expensesObj)
             }
         }
         let returnedObj = await getPromise();
@@ -59,7 +59,7 @@ let deleteExpense = async (e) => {
     try {
         
         console.log(e.target.parentNode.id);
-        const returnedObj = await axios.delete(baseURL+expensesURL+"/"+e.target.parentNode.id);
+        const returnedObj = await axios.delete(url+"/"+e.target.parentNode.id);
         if(returnedObj.data.length===0){
             e.target.parentNode.remove();
         }else{
@@ -71,11 +71,26 @@ let deleteExpense = async (e) => {
     }
 }
 
-let loadExpenses = async (e) => {
-
+let logoutUser = async (e) => {
+    e.preventDefault();
     try {
+        let response = await axios.post(`${url}/user/logout`,{});
+        console.log(response.data);
+        if(response.data.success == true){
+            window.location.replace(`${url}/login.html`);
+        }else{
+            window.location.replace(`${url}/error.html`);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
-        let returnedObj = await axios.get(baseURL+expensesURL);
+let loadExpenses = async (e) => {
+    e.preventDefault();
+    try {
+        logout.addEventListener("click",logoutUser);
+        let returnedObj = await axios.get(url);
         let data = returnedObj.data;  //array
         for(let i=0;i<data.length;i++){
             let obj = data[i];

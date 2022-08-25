@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Maze&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+
+  * {
+    margin: auto;
+    padding: auto;
+  }
+
+  body {
+    justify-content: center;
+    align-items: center;
+    background-image: url(https://wallpaperaccess.com/full/47133.jpg);
+    background-color: rgba(80, 150, 255, 0.658);
+    background-position: center;
+    background-repeat: no-repeat;
+    /* background-size: cover; */
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    
+  }
+
+  .header h1 {
+    font-family: 'Bungee', cursive;
+    color: rgb(255, 255, 255);
+    padding: 15px;
+    background-color: rgba(2, 2, 2, 0.699);
+    border-radius: 6px;
+  }
+
+  .small-text {
+    font-weight: 900;
+    font-family:'Courier New', Courier, monospace;
+    color: aliceblue;
+  }
+
+  .form-div {
+    display: flex;
+    border-radius: 10px;
+    margin-top: 30px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    height: 700px;
+    background-color: rgba(0, 0, 0, 0.747);
+  }
+
+  .form-group {
+    padding: 5px;
+    margin: 5px;
+  }
+
+  label {
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 900;
+    font-size: larger;
+    color: aliceblue;
+  }
+
+  .form-group input {
+    font-size: large;
+    border: none;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    color: aliceblue;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 900;
+  }
+
+  .btn-primary {
+    width: 300px;
+    margin-left: 35px;
+    margin-top: 35px;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 900;
+  }
+
+  .btn-primary:hover {
+    background-color: blue;
+  }
+
+  .login-div {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-div-items {
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 900;
+    color: aliceblue;
+  }
+
+  .btn-secondary {
+    width: 100px;
+    background-color:rgb(136, 40, 40);
+  }
+
+  .btn-secondary:hover {
+    background-color: red;
+}
+
+.forgot-password {
+    color: coral;
+    font-size: large;
+}
