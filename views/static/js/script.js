@@ -7,19 +7,41 @@ let button = document.getElementById('button');
 const logout = document.getElementById("logout");
 
 let url = "http://localhost:4000";
+let jwt_token = sessionStorage.getItem('token'); //getCookie('token')
+let options = { 
+    headers : { 
+        authorization : `Bearer ${jwt_token}` 
+    } 
+};
+
+// function getCookies() {
+//     return document.cookie.split("; ").reduce(function(cookies, token){
+//         // split key=value into array
+//         var pair = token.split("=");
+//         // assign value (1) as object's key with (0)
+//         cookies[pair[0]] = decodeURIComponent(pair[1]);
+//         // pass through the key-value store
+//         return cookies;
+//     }, { /* start with empty "cookies" object */ });
+// }
+
+// function getCookie(name) {
+//     return getCookies()[name];
+// }
+
+
+const getPromise = async () => {
+    const expensesObj = {"amount": amount.value, "description": description.value, "category" : category.value};
+    if(hidden.value===""){
+        return await axios.post(url, options, expensesObj);
+    }else{
+        return await axios.put(`${url}/${hidden.value}`, options, expensesObj)
+    }
+}
 
 let addExpense = async (e) => {
     e.preventDefault();
     try{
-
-        const getPromise = () => {
-            const expensesObj = {"amount": amount.value, "description": description.value, "category" : category.value};
-            if(hidden.value===""){
-                return axios.post(url, expensesObj);
-            }else{
-                return axios.put(url+"/"+hidden.value, expensesObj)
-            }
-        }
         let returnedObj = await getPromise();
         let amountVal = amount.value;
         let descriptionVal = description.value;
@@ -59,7 +81,7 @@ let deleteExpense = async (e) => {
     try {
         
         console.log(e.target.parentNode.id);
-        const returnedObj = await axios.delete(url+"/"+e.target.parentNode.id);
+        const returnedObj = await axios.delete(url+"/"+e.target.parentNode.id, options);
         if(returnedObj.data.length===0){
             e.target.parentNode.remove();
         }else{
@@ -74,9 +96,11 @@ let deleteExpense = async (e) => {
 let logoutUser = async (e) => {
     e.preventDefault();
     try {
-        let response = await axios.post(`${url}/user/logout`,{});
+        console.log("clicked");
+        let response = await axios.post(`${url}/user/logout`, options);
         console.log(response.data);
         if(response.data.success == true){
+            sessionStorage.removeItem('token');
             window.location.replace(`${url}/login.html`);
         }else{
             window.location.replace(`${url}/error.html`);
@@ -89,9 +113,13 @@ let logoutUser = async (e) => {
 let loadExpenses = async (e) => {
     e.preventDefault();
     try {
+        let response = await axios.get(`${url}/expenses`,options);
+        console.log(response);
+        if(response.data.success == false){
+            window.location.replace(`${url}/login.html`);
+        }
         logout.addEventListener("click",logoutUser);
-        let returnedObj = await axios.get(url);
-        let data = returnedObj.data;  //array
+        let data = response.data.expenses;  //array
         for(let i=0;i<data.length;i++){
             let obj = data[i];
             let amountVal = obj.amount;
@@ -164,5 +192,5 @@ function getSeparatedValues(stringObj){
 }
 
 
-window.addEventListener("DOMContentLoaded",loadExpenses);
+document.addEventListener("DOMContentLoaded",loadExpenses);
 button.addEventListener("click",addExpense);

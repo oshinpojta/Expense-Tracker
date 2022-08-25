@@ -50,6 +50,7 @@ formDiv.addEventListener("click", async (e) => {
                 let response = await axios.post(`${url}/user/add-user`, requestBody);
                 console.log(response);
                 if(response.data.success == true){
+                    alert("Successfully Signed-Up!");
                     window.location.replace(`${url}/login.html`);
                 }else{
                     msg.innerHTML = "<p style='color : red'>ERROR in Response : Please Try Again!</p>"

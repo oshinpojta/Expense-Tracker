@@ -1,24 +1,34 @@
 const User = require("../models/user");
+const jwt = require('jsonwebtoken'); //require('crypto').randomBytes(64).toString('hex') --> type in node
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-exports.getUserByEmailAndPassword = async (req, res, next) => {
+function generateAccessToken(userId) {
+    return jwt.sign(userId, process.env.TOKEN_SECRET, {});
+}
+
+exports.loginUserByEmailAndPassword = async (req, res, next) => {
     try {
         let body = req.body;
         console.log(body);
         let users = await User.findAll({where : {email : body.email}});
         if(users.length>0){
+            let user = null;
             let result = false;
             for(let i=0;i<users.length;i++){
                 result = await bcrypt.compare(body.password, users[i].password);
                 console.log(result);
                 if(result){
-                    res.json({success: true, data : users[i].id});
-                    return;
+                    user = users[i];
+                    break;
                 }
             } 
-            res.json({success : false});
-            
+            if(user!=null){
+                const token = generateAccessToken(user.id);
+                res.json({success : true, token : token});
+            }else{
+                res.json({success : false});
+            }
         }else{
             res.json({success : false});
         }

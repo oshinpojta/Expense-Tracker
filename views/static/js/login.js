@@ -25,6 +25,8 @@ formDiv.addEventListener("click", async (e) => {
                 let response = await axios.post(`${url}/user/login`, requestBody);
                 console.log(response.data);
                 if(response.data.success == true){
+                    //document.cookie = `token=${response.data.token}`
+                    sessionStorage.setItem("token", response.data.token);
                     window.location.replace(`${url}/index.html`);
                 }else{
                     msg.innerHTML = "<p style='color : red'>Either 'Email' or 'Password' is Invalid!</p>";

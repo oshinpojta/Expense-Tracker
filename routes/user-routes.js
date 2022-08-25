@@ -1,8 +1,9 @@
 const express = require("express");
 const userController = require("../controllers/user-controller");
+
 const router = express.Router();
 
-router.post("/login", userController.getUserByEmailAndPassword);
+router.post("/login", userController.loginUserByEmailAndPassword);
 
 router.post("/verify-email",userController.checkUserExists);
 
