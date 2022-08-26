@@ -3,28 +3,49 @@
     <head>
         <title>Expense Tracker</title>
         <link rel="icon" href="data:;base64,=">
+        <link rel="stylesheet" href="./static/css/index.css">
     </head>
     <body>
-            <h3> Choose Expense Amount : </h3>
-            <input type="number" name="amout" id="amount">
-            <h3> Choose A Description : </h3>
-            <input type="text" name="description" id="description">
-            <h3> Choose a Category : </h3>
-            <select name="category" id="category">
-                <option value="Fuel">Fuel</option>
-                <option value="Movies">Movies</option>
-                <option value="Household">Household</option>
-                <option value="Electricity">Electricity</option>
-                <option value="Food">Food</option>
-                <option value="Other">Other</option>
-            </select>
-            <input type="hidden" id="hidden" value="">
-            <button name="button" id="button">Add Expense</button>
-            <button id="logout" style="background-color: rgb(179, 101, 11);color: aliceblue;">Logout</button>
+        <div class="logout-div">
+            <button id="logout" type="button">Log-Out</button>
+          </div>
+
+        <div class="header"><h1>Your Expenses</h1></div>
+    <div id="form-div" class="form-div">
+        <form>
+          <label for=""><h2 style="font-weight:900;">Enter Expenses :</h2></label>
+          <small id="msg" class="small-text"></small>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Amount</label>
+              <input type="number" name="amout" id="amount" placeholder="Set Amount...">
+              <small class="small-text">What are your Expenses? :)</small>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Description</label>
+              <input type="text" name="description" id="description" placeholder="This expense is for...">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Category</label>
+                <select class="dropdown" name="category" id="category">
+                    <option value="Fuel">Fuel</option>
+                    <option value="Movies">Movies</option>
+                    <option value="Household">Household</option>
+                    <option value="Electricity">Electricity</option>
+                    <option value="Food">Food</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group add-div">
+                <input type="hidden" id="hidden" value="">
+                <button class="btn-primary" name="button" id="button">Add Expense</button>
+            </div>
+          </form>
+    </div>
             <ul id="list" style="list-style: none;">
             </ul>
+        
             <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <script src="/js/script.js">
+            <script src="./static/js/index.js">
             </script>
     </body>
 </html>

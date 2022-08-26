@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const UserService = require("../services/user-services");
 const jwt = require('jsonwebtoken'); //require('crypto').randomBytes(64).toString('hex') --> type in node
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -10,14 +10,14 @@ function generateAccessToken(userId) {
 exports.loginUserByEmailAndPassword = async (req, res, next) => {
     try {
         let body = req.body;
-        console.log(body);
-        let users = await User.findAll({where : {email : body.email}});
+        //console.log(body);
+        let users = await UserService.findUserByEmail(body.email);
         if(users.length>0){
             let user = null;
             let result = false;
             for(let i=0;i<users.length;i++){
                 result = await bcrypt.compare(body.password, users[i].password);
-                console.log(result);
+                //console.log(result);
                 if(result){
                     user = users[i];
                     break;
@@ -41,12 +41,13 @@ exports.addUser = async (req, res, next ) => {
     try {
 
         let body = req.body;
-        console.log(body);
+        //console.log(body);
         let passwordHash = await bcrypt.hash(body.password, saltRounds);
         let response  = await User.create({name : body.name, email : body.email, password : passwordHash});
         res.json({success : true, data : response});
         
     } catch (error) {
+        console.log(error);
         res.json({success : false, data : error});
     }
 }
@@ -56,6 +57,7 @@ exports.logoutUser = async (req, res, next) => {
         req.user = null;
         res.json({success : true});
     }catch(error){
+        console.log(error);
         res.json({success : false});
     }
 }
@@ -63,9 +65,8 @@ exports.logoutUser = async (req, res, next) => {
 exports.checkUserExists = async (req, res, next) => {
     try{
         let body = req.body;
-        console.log(req.body);
-        let users = await User.findAll({where : {email : body.email}});
-        console.log(users)
+        let users = await UserService.findUserByEmail(body.email);;
+        //console.log(users)
         if(users.length>0){
             res.json({success: true});
         }else{

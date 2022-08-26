@@ -6,40 +6,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 const sequelize = require("./utils/database");
-
-let authenticateToken = (req, res, next) => {
-    try{
-        console.log(req.headers);
-        const authHeader = req.headers['authorization'];
-        if(authHeader == null){
-            res.json({success : false});
-            return;
-        }
-
-        const token = authHeader.split(' ')[1];
-    
-        if (token == null){
-            res.json({success : false});
-            return;
-        }
-    
-        return jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-        console.log(err);
-    
-        if (err){
-            res.json({success : false});
-            return;
-        }
-    
-        return true;
-        })
-    }catch(err){
-        console.log(err);
-        res.json({success : false});
-        return;
-    }
-}
-
+const User = require("./models/user");
+const Expense = require("./models/expense");
 const userRoutes = require("./routes/user-routes");
 const expenseRoutes = require("./routes/expense-routes");
 
@@ -48,15 +16,37 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, `views`,`static`)));
 
+User.hasMany(Expense);
+Expense.belongsTo(User);
+
+let authenticateToken = async (req, res, next) => {
+    try{
+        //console.log(req.headers);
+        const token = req.headers['authorization'];
+    
+        if (token == null){
+            throw undefined;
+        }
+        if(req.user == null){
+            const  userId = Number(jwt.verify(token, process.env.TOKEN_SECRET));
+            const user = await User.findByPk(userId);
+            req.user = user;
+        }
+        next();
+    }catch(err){
+        //console.log(err);
+        res.json({success : false});
+    }
+}
+
 
 app.use("/user",userRoutes);
 app.use("/expenses", authenticateToken, expenseRoutes); //if req.user == null redirect to login
 
 app.use((req, res, next)=>{
     try{
-        console.log(req.headers);
         let url = req.url.split("/");
-        console.log(url);
+        //console.log(url);
         if(url[url.length-1]==''){
             res.sendFile(path.join(__dirname,`views`,`index.html`));
         }else{

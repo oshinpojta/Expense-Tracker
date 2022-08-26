@@ -10,7 +10,7 @@ let url = "http://localhost:4000";
 let jwt_token = sessionStorage.getItem('token'); //getCookie('token')
 let options = { 
     headers : { 
-        authorization : `Bearer ${jwt_token}` 
+        authorization : `${jwt_token}` 
     } 
 };
 
@@ -28,6 +28,8 @@ let options = {
 // function getCookie(name) {
 //     return getCookies()[name];
 // }
+
+
 
 
 const getPromise = async () => {
@@ -113,10 +115,15 @@ let logoutUser = async (e) => {
 let loadExpenses = async (e) => {
     e.preventDefault();
     try {
-        let response = await axios.get(`${url}/expenses`,options);
-        console.log(response);
+        console.log(sessionStorage.getItem('token'));
+        if(sessionStorage.getItem('token') == null){
+            //window.location.replace(`${url}/login.html`);
+        }
+        let response = await axios.get(`${url}/expenses/get-all`,options);
+        console.log(response.data);
         if(response.data.success == false){
-            window.location.replace(`${url}/login.html`);
+            // delete user token in node app here - code
+            //window.location.replace(`${url}/login.html`);
         }
         logout.addEventListener("click",logoutUser);
         let data = response.data.expenses;  //array
@@ -149,6 +156,7 @@ let loadExpenses = async (e) => {
         
     } catch (error) {
         console.log(error);
+       // window.location.replace(`${url}/login.html`);
     }
 }
 
