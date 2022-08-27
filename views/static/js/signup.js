@@ -37,7 +37,7 @@ formDiv.addEventListener("click", async (e) => {
                 msg.innerHTML = "<p style='color : red'>Please enter a 'Password!'</p>";
             }else if(cpassword.value == ""){
                 msg.innerHTML = "<p style='color : red'>'Confirm Password' in-order to continue!</p>";
-            }else if(cpassword.calue == password.value){
+            }else if(!cpassword.value != password.value){
                 msg.innerHTML = "<p style='color : red'>'Confirm Password' is not matching your 'Password'!</p>";
             }else{
 

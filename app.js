@@ -17,13 +17,13 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, `views`,`static`)));
 
 User.hasMany(Expense);
-Expense.belongsTo(User);
+Expense.belongsTo(User, {contraints : true, onDelete : "CASCADE"});
 
 let authenticateToken = async (req, res, next) => {
     try{
         //console.log(req.headers);
         const token = req.headers['authorization'];
-    
+        //console.log(req.headers);
         if (token == null){
             throw undefined;
         }
@@ -34,8 +34,8 @@ let authenticateToken = async (req, res, next) => {
         }
         next();
     }catch(err){
-        //console.log(err);
-        res.json({success : false});
+        console.log(err);
+        res.status(404).json({success : false, data : "Token or User Authentication Error!"});
     }
 }
 

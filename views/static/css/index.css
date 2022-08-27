@@ -4,146 +4,259 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
 
 
-  * {
-    margin: auto;
-    padding: auto;
-  }
-
-  body {
-    justify-content: center;
-    align-items: center;
-    background-image: url(https://cdn.wallpaperhub.app/cloudcache/d/f/b/9/7/3/dfb973eaff26dc001c23432d7f875a00e724e35c.jpg);
-    background-color: rgba(80, 150, 255, 0.658);
-    background-position: center;
-    background-repeat: no-repeat;
-    /* background-size: cover; */
-  }
-
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    
-  }
-
-  .header h1 {
-    font-family: 'Bungee', cursive;
-    color: rgb(255, 255, 255);
-    padding: 15px;
-    
-    background-color: rgba(2, 2, 2, 0.699);
-    border-radius: 6px;
-  }
-
-  .small-text {
-    font-weight: 900;
-    font-family:'Courier New', Courier, monospace;
-    color: aliceblue;
-    margin-top: 10px;
-  }
-
-  .form-div {
-    display: flex;
-    border-radius: 10px;
-    margin-top: 30px;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    width: 600px;
-    height: 700px;
-    background-color: rgba(0, 0, 0, 0.747);
-  }
-
-  .form-group {
-    padding: 0;
-    margin: 10px;
-  }
-
-  label {
-    display: block;
-    font-family:'Courier New', Courier, monospace;
-    font-weight: 900;
-    font-size: larger;
-    margin-top: 20px;
-    margin-left: 20px;
-    color: aliceblue;
-  }
-
-  .form-group input {
-    font-size: large;
-    border: none;
-    width: 100%;
-    margin-top: 20px;
-    background-color: rgb(255, 255, 255);
-    font-family: 'Dancing Script', cursive;
-    font-weight: 900;
-    height: 40px;
-    border-radius: 4px;
-  }
-
-  .form-group select {
-    font-size: large;
-    border: none;
-    width: 590px;
-    margin-top: 20px;
-    background-color: rgb(255, 255, 255);
-    font-family: 'Dancing Script', cursive;
-    font-weight: 900;
-    height: 40px;
-    border-radius: 4px;
-  }
-
-  .btn-primary {
-    width: 400px;
-    height: 40px;
-    margin-left: 85px;
-    margin-top: 35px;
-    font-family:'Courier New', Courier, monospace;
-    font-weight: 900;
-    color: aliceblue;
-    background-color: rgb(0, 97, 97);
-    border: none;
-    border-radius: 5px;
-    transition: width 1s, height 1s, background-color 1s;
-  }
-
-  .btn-primary:hover {
-    width: 420px;
-    height: 50px;
-    background-color: rgb(0, 253, 127);
-  }
-
-  .add-div {
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logout-div{
-    display: flex;
-    align-self: flex-end;
-    float: right;
-    width: 120px;
-    height: 30px;
-    margin-left: 50px;
-  }
-
-  #logout {
-    width: 100px;
-    height: 40px;
-    border-radius: 5px;
-    border: none;
-    color: antiquewhite;
-    font-family:'Courier New', Courier, monospace;
-    font-weight: 900;
-    background-color:rgb(250, 0, 0);
-    transition: width 1s, height 1s, background-color 1s;
-  }
-
-  #logout:hover {
-    background-color: rgb(255, 60, 0);
-    width: 120px;
-    height: 50px;
+* {
+  margin: auto;
+  padding: auto;
 }
+
+body {
+  justify-content: center;
+  align-items: center;
+  background-image: url(https://cdn.wallpaperhub.app/cloudcache/d/f/b/9/7/3/dfb973eaff26dc001c23432d7f875a00e724e35c.jpg);
+  background-color: rgba(80, 150, 255, 0.658);
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-size: cover; */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 150px;
+}
+
+.header h1 {
+  font-family: 'Bungee', cursive;
+  color: rgb(0, 0, 0);
+  padding: 15px;
+  margin-top: 40px;
+  background-color: rgba(123, 255, 0, 0.699);
+  border-radius: 6px;
+  width: 900px;
+  text-align: center;
+}
+
+.small-text {
+  font-weight: 900;
+  font-family:'Courier New', Courier, monospace;
+  color: rgb(255, 255, 255);
+  margin-top: 10px;
+}
+
+.form-div {
+  display: flex;
+  border-radius: 10px;
+  margin-top: 30px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 700px;
+  height: 700px;
+  background-color: rgba(0, 0, 0, 0.747);
+}
+
+.form-group {
+  padding: 0;
+  margin: 10px;
+}
+
+label {
+  display: block;
+  font-family:'Courier New', Courier, monospace;
+  font-weight: 900;
+  font-size: larger;
+  margin-top: 20px;
+  margin-left: 20px;
+  color: aliceblue;
+}
+
+.form-group input {
+  font-size: large;
+  border: none;
+  width: 100%;
+  margin-top: 20px;
+  background-color: rgb(255, 255, 255);
+  font-family: 'Dancing Script', cursive;
+  font-weight: 900;
+  height: 40px;
+  border-radius: 4px;
+}
+
+.form-group select {
+  font-size: large;
+  border: none;
+  width: 590px;
+  margin-top: 20px;
+  background-color: rgb(255, 255, 255);
+  font-family: 'Dancing Script', cursive;
+  font-weight: 900;
+  height: 40px;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  width: 400px;
+  height: 40px;
+  margin-left: 85px;
+  margin-top: 35px;
+  font-family:'Courier New', Courier, monospace;
+  font-weight: 900;
+  color: aliceblue;
+  background-color: rgb(0, 97, 97);
+  border: none;
+  border-radius: 5px;
+  transition: width 1s, height 1s, background-color 1s;
+}
+
+.btn-primary:hover {
+  width: 420px;
+  height: 50px;
+  background-color: rgb(0, 253, 127);
+}
+
+.add-div {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-div{
+  display: flex;
+  align-self: flex-end;
+  float: right;
+  width: 120px;
+  height: 30px;
+  margin-left: 50px;
+}
+
+#logout {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  color: antiquewhite;
+  font-family:'Courier New', Courier, monospace;
+  font-weight: 900;
+  background-color:rgb(250, 0, 0);
+  transition: width 1s, height 1s, background-color 1s;
+}
+
+#logout:hover {
+  background-color: rgb(255, 60, 0);
+  width: 120px;
+  height: 50px;
+}
+
+#list-div {
+  display: block;
+  border-radius: 10px;
+  margin-top: 30px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  width: 700px;
+  color:rgb(255, 255, 255);
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.747);
+}
+
+#list-div h1 {
+  display: block;
+  color:bisque;
+  margin: 30px;
+  font-family: 'Bungee', cursive;
+}
+
+#total {
+  margin: 10px;
+}
+
+
+.list-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(56, 5, 107, 0.692);
+  margin: 30px;
+  width: 650px;
+  height: 60px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.list-category{
+  display: flex;
+  width: auto;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: rgba(57, 253, 227, 0.863);
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.list-amount {
+  display: flex;
+  width: auto;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: rgba(252, 252, 252, 0.849);
+  color: black;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.list-button-edit {
+  width: 70px;
+  height: 30px;
+  background-color: rgba(255, 246, 113, 0.877);
+  border: none;
+  border-radius: 5px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.list-button-delete {
+  width: 40px;
+  height: 30px;
+  background-color: rgba(255, 68, 0, 0.884);
+  border: none;
+  border-radius: 5px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+
+.is-editing {
+  display: block;
+  border: none;
+  border-radius: 5px;
+  background-color:rgb(255, 238, 0);
+  color: rgb(0, 0, 0);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  font-weight: 600;
+  width: 120px;
+  height: 50px;
+  float: right;
+}
+
+

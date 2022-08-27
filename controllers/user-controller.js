@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken'); //require('crypto').randomBytes(64).toStrin
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+
+const userService = new UserService();
 function generateAccessToken(userId) {
     return jwt.sign(userId, process.env.TOKEN_SECRET, {});
 }
@@ -11,7 +13,7 @@ exports.loginUserByEmailAndPassword = async (req, res, next) => {
     try {
         let body = req.body;
         //console.log(body);
-        let users = await UserService.findUserByEmail(body.email);
+        let users = await userService.findUserByEmail(body.email);
         if(users.length>0){
             let user = null;
             let result = false;
@@ -27,13 +29,14 @@ exports.loginUserByEmailAndPassword = async (req, res, next) => {
                 const token = generateAccessToken(user.id);
                 res.json({success : true, token : token});
             }else{
-                res.json({success : false});
+                res.status(404).json({success : false});
             }
         }else{
-            res.json({success : false});
+            res.status(404).json({success : false});
         }
     } catch (error) {
         console.log(error);
+        res.status(404).json({success : false});
     }
 }
 
@@ -41,14 +44,14 @@ exports.addUser = async (req, res, next ) => {
     try {
 
         let body = req.body;
-        //console.log(body);
+        console.log(body);
         let passwordHash = await bcrypt.hash(body.password, saltRounds);
-        let response  = await User.create({name : body.name, email : body.email, password : passwordHash});
+        let response  = await userService.addUser(body.name, body.email, passwordHash);
         res.json({success : true, data : response});
         
     } catch (error) {
         console.log(error);
-        res.json({success : false, data : error});
+        res.status(404).json({success : false, data : error});
     }
 }
 
@@ -58,19 +61,19 @@ exports.logoutUser = async (req, res, next) => {
         res.json({success : true});
     }catch(error){
         console.log(error);
-        res.json({success : false});
+        res.status(404).json({success : false, data : error});
     }
 }
 
 exports.checkUserExists = async (req, res, next) => {
     try{
         let body = req.body;
-        let users = await UserService.findUserByEmail(body.email);;
+        let users = await userService.findUserByEmail(body.email);;
         //console.log(users)
         if(users.length>0){
             res.json({success: true});
         }else{
-            res.json({success : false});
+            res.status(404).json({success : false, data : "User Not Found!"});
         }
 
     }catch(error){

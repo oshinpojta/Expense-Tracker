@@ -3,18 +3,19 @@
     <head>
         <title>Expense Tracker</title>
         <link rel="icon" href="data:;base64,=">
-        <link rel="stylesheet" href="./static/css/index.css">
+        <link rel="stylesheet" href="/css/index.css">
     </head>
     <body>
         <div class="logout-div">
             <button id="logout" type="button">Log-Out</button>
           </div>
 
-        <div class="header"><h1>Your Expenses</h1></div>
+        <div class="header"><h1>Your Expenses !</h1></div>
     <div id="form-div" class="form-div">
         <form>
+          <button class="is-editing" style="display:none;">Edit-Mode X</button>
           <label for=""><h2 style="font-weight:900;">Enter Expenses :</h2></label>
-          <small id="msg" class="small-text"></small>
+          <small id="msg" class="small-text" style="margin:20px;color:red;font-size:18px;"></small>
             <div class="form-group">
                 <label for="exampleInputPassword1">Amount</label>
               <input type="number" name="amout" id="amount" placeholder="Set Amount...">
@@ -37,15 +38,20 @@
             </div>
             <div class="form-group add-div">
                 <input type="hidden" id="hidden" value="">
-                <button class="btn-primary" name="button" id="button">Add Expense</button>
+                <button type="button" class="btn-primary" id="button">Add Expense</button>
             </div>
           </form>
     </div>
-            <ul id="list" style="list-style: none;">
-            </ul>
+      <div id="list-div" class="list-div">
+
+        <div class="list-header">
+          <h1>Total Expense Amount : Rs.<span id="total-expense">0</span></h1>
+        </div>
+
+      </div>
         
             <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <script src="./static/js/index.js">
+            <script src="/js/index.js">
             </script>
     </body>
 </html>
