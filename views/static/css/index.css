@@ -95,6 +95,7 @@ label {
 }
 
 .btn-primary {
+  cursor: pointer;
   width: 400px;
   height: 40px;
   margin-left: 85px;
@@ -112,6 +113,7 @@ label {
   width: 420px;
   height: 50px;
   background-color: rgb(0, 253, 127);
+  color: black;
 }
 
 .add-div {
@@ -130,6 +132,7 @@ label {
 }
 
 .leaderboard {
+  cursor: pointer;
   width: 200px;
   height: 40px;
   border-radius: 5px;
@@ -161,6 +164,7 @@ label {
 }
 
 #logout {
+  cursor: pointer;
   width: 130px;
   height: 40px;
   border-radius: 5px;
@@ -179,6 +183,7 @@ label {
 }
 
 #membership{
+  cursor: pointer;
   width: 180px;
   height: 40px;
   border-radius: 5px;
@@ -270,6 +275,7 @@ label {
 }
 
 .list-button-edit {
+  cursor: pointer;
   width: 70px;
   height: 30px;
   background-color: rgba(255, 246, 113, 0.877);
@@ -278,9 +284,18 @@ label {
   font-family: 'Courier New', Courier, monospace;
   font-size: 18px;
   font-weight: 800;
+  transition: width 1s, height 1s, background-color 1s;
+}
+
+.list-button-edit:hover{
+  width: 80px;
+  height: 35px;
+  z-index: 1;
+  background-color: rgb(255, 238, 1);
 }
 
 .list-button-delete {
+  cursor: pointer;
   width: 40px;
   height: 30px;
   background-color: rgba(255, 68, 0, 0.884);
@@ -289,10 +304,18 @@ label {
   font-family: 'Courier New', Courier, monospace;
   font-size: 18px;
   font-weight: 800;
+  transition: width 1s, height 1s, background-color 1s;
 }
 
+.list-button-delete:hover{
+  width: 50px;
+  height: 35px;
+  background-color: rgb(255, 38, 0);
+  z-index: 1;
+}
 
 .is-editing {
+  cursor: pointer;
   display: block;
   border: none;
   border-radius: 5px;
@@ -304,9 +327,15 @@ label {
   width: 120px;
   height: 50px;
   float: right;
+  transition: width 1s, height 1s, background-color 1s, color 1s;
 }
 
-
+.is-editing:hover{
+  background-color:rgb(46, 44, 16);
+  color: white;
+  width: 140px;
+  height: 60px;
+}
 
 body.premium {
   background-image: url(https://cdn.wallpaperhub.app/cloudcache/d/f/b/9/7/3/dfb973eaff26dc001c23432d7f875a00e724e35c.jpg);

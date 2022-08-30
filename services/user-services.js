@@ -2,6 +2,14 @@ const User = require("../models/user");
 
 class UserService{
 
+    getAllUsers = async () =>{
+        try{
+            return await User.findAll({attributes: ['id', 'name', 'email']});
+        }catch(error) {
+            throw error;
+        }
+    }
+
     findUserByEmail = async (email) => {
         try{
             return await User.findAll({where : {email : email}});

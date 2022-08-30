@@ -253,7 +253,7 @@ const getClick = async (e) => {
             };
         }
 
-        if(e.target.className == "leaderboard"){
+        if(e.target.id == "leaderboard"){
             window.location.replace(`${url}/leaderboard.html`);
         }
 
@@ -266,7 +266,7 @@ const getClick = async (e) => {
 let loadExpenses = async (e) => {
     e.preventDefault();
     try {
-        console.log(sessionStorage.getItem('token'));
+        //console.log(sessionStorage.getItem('token'));
         if(sessionStorage.getItem('token') == null){
             window.location.replace(`${url}/login.html`);
         }
@@ -282,7 +282,7 @@ let loadExpenses = async (e) => {
             document.querySelector("body").classList.add("premium");
             document.querySelector(".header h1").classList.add("premium");
             document.querySelector("#membership").classList.add("premium");
-            document.querySelector(".btn-primary").classList.add("premium");
+            //document.querySelector(".btn-primary").classList.add("premium");
             document.querySelector(".leaderboard").classList.add("premium");
         }
         if(expenses.length>0){

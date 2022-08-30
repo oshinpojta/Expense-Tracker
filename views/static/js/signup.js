@@ -37,7 +37,7 @@ formDiv.addEventListener("click", async (e) => {
                 msg.innerHTML = "<p style='color : red'>Please enter a 'Password!'</p>";
             }else if(cpassword.value == ""){
                 msg.innerHTML = "<p style='color : red'>'Confirm Password' in-order to continue!</p>";
-            }else if(!cpassword.value != password.value){
+            }else if(cpassword.value != password.value){
                 msg.innerHTML = "<p style='color : red'>'Confirm Password' is not matching your 'Password'!</p>";
             }else{
 
@@ -50,7 +50,7 @@ formDiv.addEventListener("click", async (e) => {
                 let response = await axios.post(`${url}/user/add-user`, requestBody);
                 console.log(response);
                 if(response.data.success == true){
-                    alert("Successfully Signed-Up!");
+                    swal("Successfully Signed-Up!");
                     window.location.replace(`${url}/login.html`);
                 }else{
                     msg.innerHTML = "<p style='color : red'>ERROR in Response : Please Try Again!</p>"

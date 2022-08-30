@@ -73,11 +73,12 @@ exports.checkUserExists = async (req, res, next) => {
         if(users.length>0){
             res.json({success: true});
         }else{
-            res.status(404).json({success : false, data : "User Not Found!"});
+            res.json({success : false, data : "User Not Found!"});
         }
 
     }catch(error){
         console.log(error);
+        res.status(500).json({success : false, data : "Server Error"})
     }
 }
 
