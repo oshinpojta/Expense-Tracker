@@ -141,7 +141,7 @@ const getClick = async (e) => {
         }
 
         if(e.target.id == "logout"){
-            let response = await axios.post(`${url}/user/logout`, options);
+            let response = await axios.post(`${url}/user/logout`, {}, options);
             console.log(response.data);
             sessionStorage.removeItem('token');
             if(response.data.success == true){
@@ -149,6 +149,112 @@ const getClick = async (e) => {
             }else{
                 window.location.replace(`${url}/error.html`);
             }
+        }
+
+        if(e.target.id == "membership"){
+
+            let response = await axios.post(`${url}/membership/create-order`, {}, options);
+            console.log(response.data);
+            if(response.data.success==true){
+                let order = response.data.data;
+                let willProceed = await swal({
+                    title: `Order-id Created! : ${order.id}`,
+                    text: `Would You Like To Proceed!? Amount : ${order.amount}`,
+                    icon: "success",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                
+                if (willProceed) {
+                    let result = null;
+                    let orderOptions = {
+                        "key" : "rzp_test_EgsrVRajg1uGbM",
+                        "currency" : "INR",
+                        "name" : "ZODIAC",
+                        "description" : "RazorPay Membership Order",
+                        "order_id" : order.id,
+                        "handler" : async (response) => {
+                             result = await axios.post(`${url}/membership/add`, response, options);
+                             console.log(result);
+                            if(result.data.success==true){
+                                swal({
+                                    title: "Congratulations!",
+                                    text : "You Are Now A Premium Member!",
+                                    icon: "success"
+                                }).then(()=>{
+                                    location.reload();
+                                })
+                            }else{
+                                let willTryAgain = await swal({
+                                    title: "Error: Transaction Failed!",
+                                    text: "Would You Like To Try Again!?",
+                                    icon: "warning",
+                                    buttons: true,
+                                    dangerMode: true,
+                                })
+                                
+                                if (willTryAgain) {
+                                    let result = null;
+                                    let orderOptions = {
+                                        "key" : "rzp_test_EgsrVRajg1uGbM",
+                                        "currency" : "INR",
+                                        "name" : "ZODIAC",
+                                        "description" : "RazorPay Membership Order",
+                                        "order_id" : order.id,
+                                        "handler" : async (response) => {
+                                             result = await axios.post(`${url}/membership/add`, response, options);
+                                             console.log(result);
+                                            if(result.data.success==true){
+                                                swal({
+                                                    title: "Congratulations!",
+                                                    text : "You Are Now A Premium Member!",
+                                                    icon: "success"
+                                                }).then(()=>{
+                                                    location.reload();
+                                                })
+                                            }else{
+                                                swal({
+                                                    title: "Error: Transaction Failed!",
+                                                    text : "Please Try Again Later!",
+                                                    icon: "warning"
+                                                });
+                                            }
+                                        },
+                                        "theme" : {
+                                            "color" : "#227254"
+                                        }
+                                    };
+                                    var getPayment = new Razorpay(orderOptions);
+                                    getPayment.open();
+                                } else {
+                                    swal("Transaction Cancelled!");
+                                }
+                            }
+                        },
+                        "theme" : {
+                            "color" : "#227254"
+                        }
+                    };
+                    var getPayment = new Razorpay(orderOptions);
+                    getPayment.open();
+                } else {
+                    swal({
+                      title: "Order Cancelled!",
+                      icon: "success"
+                    });
+                }
+
+            }else{
+                swal({
+                    title: "Order cannot Be Created!",
+                    text : "Please Try Again After Some Time!",
+                    icon: "warning"
+                  });
+            };
+        }
+
+        if(e.target.className == "leaderboard"){
+            window.location.replace(`${url}/leaderboard.html`);
         }
 
     }catch(error){
@@ -171,6 +277,14 @@ let loadExpenses = async (e) => {
             window.location.replace(`${url}/login.html`);
         }
         let expenses = response.data.data;  //array
+        let premiumResponse = await axios.get(`${url}/membership/get`,options);
+        if(premiumResponse.data.success == true){
+            document.querySelector("body").classList.add("premium");
+            document.querySelector(".header h1").classList.add("premium");
+            document.querySelector("#membership").classList.add("premium");
+            document.querySelector(".btn-primary").classList.add("premium");
+            document.querySelector(".leaderboard").classList.add("premium");
+        }
         if(expenses.length>0){
             let totalExpense = 0;
             let textHtml = "";
@@ -188,7 +302,6 @@ let loadExpenses = async (e) => {
             }
             listDiv.innerHTML += textHtml;
             document.querySelector("#total-expense").innerText = totalExpense;
-            console.log(document.querySelector("#total-expense"));
         }
         
     } catch (error) {

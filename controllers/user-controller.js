@@ -12,14 +12,14 @@ function generateAccessToken(userId) {
 exports.loginUserByEmailAndPassword = async (req, res, next) => {
     try {
         let body = req.body;
-        //console.log(body);
+        console.log(body);
         let users = await userService.findUserByEmail(body.email);
         if(users.length>0){
             let user = null;
             let result = false;
             for(let i=0;i<users.length;i++){
                 result = await bcrypt.compare(body.password, users[i].password);
-                //console.log(result);
+                console.log(result);
                 if(result){
                     user = users[i];
                     break;
@@ -29,14 +29,14 @@ exports.loginUserByEmailAndPassword = async (req, res, next) => {
                 const token = generateAccessToken(user.id);
                 res.json({success : true, token : token});
             }else{
-                res.status(404).json({success : false});
+                res.status(404).json({success : false, data : "Email or Password Invalid!"});
             }
         }else{
-            res.status(404).json({success : false});
+            res.status(404).json({success : false, data : "User Not Fount!"});
         }
     } catch (error) {
         console.log(error);
-        res.status(404).json({success : false});
+        res.status(500).json({success : false, data : "Internal Server Error!"});
     }
 }
 

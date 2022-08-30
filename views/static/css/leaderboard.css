@@ -1,0 +1,72 @@
+
+
+.nav-div{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.658);
+    width: auto;
+    height: 80px;
+  }
+  
+  .leaderboard {
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    color: antiquewhite;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 900;
+    background-color:rgb(0, 252, 21);
+    transition: width 1s, height 1s, background-color 1s;
+  }
+  
+  .leaderboard:hover {
+    background-color: rgb(220, 255, 139);
+    color: black;
+    width: 230px;
+    height: 50px;
+  }
+
+  .index{
+    width: 180px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    color: antiquewhite;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 900;
+    background-color:rgb(87, 0, 250);
+    transition: width 1s, height 1s, background-color 1s;
+  }
+  
+  .index:hover {
+    background-color: rgb(139, 212, 255);
+    color: black;
+    width: 200px;
+    height: 50px;
+  }
+  
+  
+  .logout-div{
+    display: flex;
+    float: right;
+    width: 380px;
+    height: 60px;
+  }
+  
+  #logout {
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    color: antiquewhite;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 900;
+    background-color:rgb(250, 0, 0);
+    transition: width 1s, height 1s, background-color 1s;
+  }
+  
+  #logout:hover {
+    background-color: rgb(255, 60, 0);
+    width: 150px;
+    height: 50px;
+  }

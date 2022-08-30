@@ -13,8 +13,14 @@ formDiv.addEventListener("click", async (e) => {
         if(e.target.id=="login-btn"){
             if(email.value == ""){
                 msg.innerHTML = "<p style='color : red'>'Email' is necessary for Login!</p>";
+                setTimeout(()=>{
+                    msg.innerHTML = "";
+                },5000);
             }else if(password.value == ""){
                 msg.innerHTML = "<p style='color : red'>Please enter a 'Password!'</p>";
+                setTimeout(()=>{
+                    msg.innerHTML = "";
+                },5000);
             }else{
 
                 let requestBody = {
@@ -29,7 +35,10 @@ formDiv.addEventListener("click", async (e) => {
                     sessionStorage.setItem("token", response.data.token);
                     window.location.replace(`${url}/index.html`);
                 }else{
-                    msg.innerHTML = "<p style='color : red'>Either 'Email' or 'Password' is Invalid!</p>";
+                    msg.innerHTML = `<p style='color : red'>${response.data.data}</p>`;
+                    setTimeout(()=>{
+                        msg.innerHTML = "";
+                    },5000);
                 }
                 password.value = "";
             }
@@ -40,5 +49,9 @@ formDiv.addEventListener("click", async (e) => {
         }
     }catch(err){
         console.log(err);
+        msg.innerHTML = `<p style='color : red'>Email Or Password Invalid!</p>`;
+        setTimeout(()=>{
+            msg.innerHTML = "";
+        },5000);
     }
 });

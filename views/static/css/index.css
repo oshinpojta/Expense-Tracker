@@ -12,8 +12,7 @@
 body {
   justify-content: center;
   align-items: center;
-  background-image: url(https://cdn.wallpaperhub.app/cloudcache/d/f/b/9/7/3/dfb973eaff26dc001c23432d7f875a00e724e35c.jpg);
-  background-color: rgba(80, 150, 255, 0.658);
+  background-color: rgb(251, 255, 0);
   background-position: center;
   background-repeat: no-repeat;
   /* background-size: cover; */
@@ -24,15 +23,14 @@ body {
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-  margin-left: 150px;
 }
 
 .header h1 {
   font-family: 'Bungee', cursive;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   padding: 15px;
-  margin-top: 40px;
-  background-color: rgba(123, 255, 0, 0.699);
+  margin-top: 30px;
+  background-color: rgba(150, 85, 0, 0.699);
   border-radius: 6px;
   width: 900px;
   text-align: center;
@@ -123,17 +121,47 @@ label {
   align-items: center;
 }
 
+
+.nav-div{
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.658);
+  width: auto;
+  height: 80px;
+}
+
+.leaderboard {
+  width: 200px;
+  height: 40px;
+  border-radius: 5px;
+  display: none;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-family:'Courier New', Courier, monospace;
+  font-weight: 900;
+  background-color:rgb(0, 252, 21);
+  transition: width 1s, height 1s, background-color 1s;
+}
+
+.leaderboard.premium {
+  display: block;
+}
+
+.leaderboard:hover {
+  background-color: rgb(220, 255, 139);
+  color: black;
+  width: 230px;
+  height: 50px;
+}
+
 .logout-div{
   display: flex;
-  align-self: flex-end;
   float: right;
-  width: 120px;
-  height: 30px;
-  margin-left: 50px;
+  width: 380px;
+  height: 60px;
 }
 
 #logout {
-  width: 100px;
+  width: 130px;
   height: 40px;
   border-radius: 5px;
   border: none;
@@ -146,7 +174,26 @@ label {
 
 #logout:hover {
   background-color: rgb(255, 60, 0);
-  width: 120px;
+  width: 150px;
+  height: 50px;
+}
+
+#membership{
+  width: 180px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  color: antiquewhite;
+  font-family:'Courier New', Courier, monospace;
+  font-weight: 900;
+  background-color:rgb(87, 0, 250);
+  transition: width 1s, height 1s, background-color 1s;
+}
+
+#membership:hover {
+  background-color: rgb(139, 212, 255);
+  color: black;
+  width: 200px;
   height: 50px;
 }
 
@@ -260,3 +307,30 @@ label {
 }
 
 
+
+body.premium {
+  background-image: url(https://cdn.wallpaperhub.app/cloudcache/d/f/b/9/7/3/dfb973eaff26dc001c23432d7f875a00e724e35c.jpg);
+  background-color: rgba(0, 0, 0, 0.658);
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-size: cover; */
+}
+
+.header h1.premium {
+  color: rgb(0, 0, 0);
+  background-color: rgba(123, 255, 0, 0.699);
+}
+
+#membership.premium{
+  display: none;
+}
+
+.btn-primary.premium {
+  background-color: chartreuse;
+  color: black;
+}
+
+.btn-primary.premium:hover {
+  background-color: rgb(0, 13, 88);
+  color: rgb(255, 255, 255);
+}
