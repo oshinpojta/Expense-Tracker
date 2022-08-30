@@ -44,7 +44,22 @@ formDiv.addEventListener("click", async (e) => {
             }
         }
 
-        if(e.target.id=="signup"){
+        if(e.target.id == "forgot-password"){
+            const { value: email } = await Swal.fire({
+                title: 'Get Password Reset Link On Email!',
+                input: 'email',
+                inputLabel: 'Your email address!',
+                inputPlaceholder: 'Please Enter Your Email Address',
+                buttons: true,
+                confirmButtonText: "Send-Link"
+            });
+              
+            if (email) {
+                let response = await axios.post(`${url}/users/password/password-reset`, { email : email });
+            }
+        }
+
+        if(e.target.id == "signup"){
             window.location.replace(`${url}/signup.html`);
         }
     }catch(err){
