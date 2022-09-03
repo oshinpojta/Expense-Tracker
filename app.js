@@ -9,9 +9,12 @@ const sequelize = require("./utils/database");
 const User = require("./models/user");
 const Expense = require("./models/expense");
 const Membership = require("./models/membership");
+const ForgotPasswordRequest = require("./models/forgot-password-request");
 const userRoutes = require("./routes/user-routes");
 const expenseRoutes = require("./routes/expense-routes");
 const membershipRoutes = require("./routes/memebership-routes");
+const forgotPasswordRequestRoutes = require("./routes/forgot-password-routes");
+
 
 const app = express();
 app.use(cors());
@@ -20,8 +23,11 @@ app.use(express.static(path.join(__dirname, `views`,`static`)));
 
 User.hasMany(Expense);
 User.hasOne(Membership);
+User.hasMany(ForgotPasswordRequest);
 Expense.belongsTo(User, {contraints : true, onDelete : "CASCADE"});
 Membership.belongsTo(User, {contraints : true, onDelete : "CASCADE"});
+ForgotPasswordRequest.belongsTo(User, {contraints : true, onDelete : "CASCADE"});
+
 
 let authenticateToken = async (req, res, next) => {
     try{
@@ -42,11 +48,10 @@ let authenticateToken = async (req, res, next) => {
         res.status(404).json({success : false, data : "Token or User Authentication Error!"});
     }
 }
-
-
 app.use("/user",userRoutes);
 app.use("/expenses", authenticateToken, expenseRoutes); //if req.user == null redirect to login
 app.use("/membership", authenticateToken, membershipRoutes); //if req.user == null redirect to login
+app.use("/password", forgotPasswordRequestRoutes);
 
 app.use((req, res, next)=>{
     try{

@@ -55,7 +55,10 @@ formDiv.addEventListener("click", async (e) => {
             });
               
             if (email) {
-                let response = await axios.post(`${url}/users/password/password-reset`, { email : email });
+                let response = await axios.post(`${url}/password/resetpassword`, { email : email });
+                if(response.data.success == true){
+                    Swal.fire("Please Check Your Email For Reset Password Link!");
+                }
             }
         }
 

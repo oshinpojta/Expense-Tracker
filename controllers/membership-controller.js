@@ -2,8 +2,8 @@ const MembershipService = require("../services/membership-services");
 const razorpay = require("razorpay");
 
 let instance = new razorpay({
-    key_id : "rzp_test_EgsrVRajg1uGbM",
-    key_secret : "nwkx6kThB7PPxvGntbRs9BzL" 
+    key_id : process.env.RAZORPAY_KEY_ID,
+    key_secret : process.env.RAZORPAY_KEY_SECRET
 });
 
 let paymentOptions = {

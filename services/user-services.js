@@ -2,6 +2,14 @@ const User = require("../models/user");
 
 class UserService{
 
+    getUser = async ( userId ) => {
+        try {
+            return User.findByPk(userId)
+        } catch (error) {
+            throw error;
+        }
+    }
+
     getAllUsers = async () =>{
         try{
             return await User.findAll({attributes: ['id', 'name', 'email']});
@@ -12,7 +20,7 @@ class UserService{
 
     findUserByEmail = async (email) => {
         try{
-            return await User.findAll({where : {email : email}});
+            return await User.findOne({where : {email : email}});
         }catch(error){
             throw error;
         }
@@ -26,7 +34,7 @@ class UserService{
         }
     }
     
-    updateUser = async (req, res, next) => {
+    updateUserPassword = async (userId, password) => {
         try {
             
         } catch (error) {
@@ -34,7 +42,7 @@ class UserService{
         }
     } 
     
-    deleteUser = async (req, res, next) => {
+    deleteUser = async () => {
         try {
             
         } catch (error) {
