@@ -46,14 +46,35 @@
             </div>
           </form>
     </div>
+
       <div id="list-div" class="list-div">
+
+        <div class="format-selector-div" >
+          <select id="expenseformat" name="expenseformat" class="format-selector">
+            <option value="day">Day</option>
+            <option value="week">Week</option>
+            <option value="month">Month</option>
+            <option value="year">Year</option>
+          </select>
+          <button id="selectorbtn" class="selector-btn">Show</button>
+        </div>
 
         <div class="list-header">
           <h1>Total Expense Amount : Rs.<span id="total-expense">0</span></h1>
         </div>
 
       </div>
+
+      <div class="download-div"><button id="downloadexpenses" class="downloadexpenses" disabled>Download Expenses <i class="fa fa-download" aria-hidden="true"></i></button></div>
+
+      <div id="list-urls-div" class="list-urls-div">
+        <div class="list-urls-header">
+          <h1>Previous Downloads</h1>
+        </div>
+      </div>
+
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script src="/js/index.js"></script>

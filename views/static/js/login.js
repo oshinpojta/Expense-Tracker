@@ -58,6 +58,8 @@ formDiv.addEventListener("click", async (e) => {
                 let response = await axios.post(`${url}/password/resetpassword`, { email : email });
                 if(response.data.success == true){
                     Swal.fire("Please Check Your Email For Reset Password Link!");
+                }else{
+                    Swal.fire("Email Does Not Exist With Us!");
                 }
             }
         }

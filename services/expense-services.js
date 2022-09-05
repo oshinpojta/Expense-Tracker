@@ -1,10 +1,12 @@
 const Expense = require("../models/expense");
+const Sequelize = require("sequelize");
 
+const Op = Sequelize.Op;
 class ExpenseService{
 
-    getAllExpensesByUser = async (userId) => {
+    getAllExpensesByUser = async (userId, startedDate, endDate) => {
         try{
-            return await Expense.findAll({where : { userId : userId}});  
+            return await Expense.findAll({where : { userId : userId, createdAt : {[Op.between] : [startedDate , endDate]}}});  
         }catch(error){
             throw error;
         }

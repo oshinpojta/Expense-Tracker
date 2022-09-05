@@ -13,26 +13,12 @@ exports.loginUserByEmailAndPassword = async (req, res, next) => {
     try {
         let body = req.body;
         console.log(body);
-        let users = await userService.findUserByEmail(body.email);
-        if(users.length>0){
-            let user = null;
-            let result = false;
-            for(let i=0;i<users.length;i++){
-                result = await bcrypt.compare(body.password, users[i].password);
-                console.log(result);
-                if(result){
-                    user = users[i];
-                    break;
-                }
-            } 
-            if(user!=null){
-                const token = generateAccessToken(user.id);
-                res.json({success : true, token : token});
-            }else{
-                res.status(404).json({success : false, data : "Email or Password Invalid!"});
-            }
+        let user = await userService.findUserByEmail(body.email);
+        if(user!=null){
+            const token = generateAccessToken(user.id);
+            res.json({success : true, token : token});
         }else{
-            res.status(404).json({success : false, data : "User Not Fount!"});
+            res.status(404).json({success : false, data : "Email or Password Invalid!"});
         }
     } catch (error) {
         console.log(error);

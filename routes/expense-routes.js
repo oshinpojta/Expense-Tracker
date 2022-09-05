@@ -3,9 +3,13 @@ const expenseController = require("../controllers/expense-controller");
 
 const router = express.Router();
 
-router.get("/get-all",  expenseController.getAllExpensesByUser);
+router.post("/get-all",  expenseController.getAllExpensesByUser);
 
 router.get("/leaderboard",  expenseController.getAllExpensesByAll);
+
+router.get("/download", expenseController.getDownloadExpense);
+
+router.get("/file-urls", expenseController.getAllDownlloadFileURLS);
 
 router.post("/add", expenseController.addExpense);
 

@@ -108,3 +108,48 @@
   .btn-secondary:hover {
     background-color: red;
 }
+
+
+.swal-overlay {
+  background-color: rgba(255, 255, 255, 0.493);
+}
+
+.swal-modal {
+  background-color: rgb(0, 0, 0);
+  border-radius: 10px;
+  width: 800px;
+  height: auto;
+}
+
+.swal-title {
+  margin: 0px;
+  font-size: 25px;
+  box-shadow: 0px 1px 1px rgba(255, 255, 255, 0.21);
+  color: white;
+  margin-bottom: 28px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.swal-text {
+  padding: 17px;
+  border: 2px solid #5eff00;
+  display: block;
+  margin: 22px;
+  text-align: center;
+  font-size: 20px;
+  color: #ffffff;
+  font-family: 'Courier New', Courier, monospace;
+  border-radius: 7px
+}
+
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 4px;
+  background-color: #0943ff;
+  font-size: 12px;
+  width: 80px;
+  height: 30px;
+  text-align: center;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
