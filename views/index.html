@@ -46,23 +46,36 @@
             </div>
           </form>
     </div>
+    <div class="settings-container">
+      <div class="format-selector-div" >
+        <button id="selectorbtn" class="selector-btn">Show Items Based On</button>
+        <select id="expenseformat" name="expenseformat" class="format-selector">
+          <option value="day">Day</option>
+          <option value="week">Week</option>
+          <option value="month">Month</option>
+          <option value="year">Year</option>
+        </select>
+      </div>
+      <div class="count-div">
+        <button id="countbtn" class="count-btn">Set Items Count</button>
+        <select id="count" name="count" class="count">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="list-header">
+      <h1>Total Expense Amount : Rs.<span id="total-expense">0</span></h1>
+    </div>
 
       <div id="list-div" class="list-div">
 
-        <div class="format-selector-div" >
-          <select id="expenseformat" name="expenseformat" class="format-selector">
-            <option value="day">Day</option>
-            <option value="week">Week</option>
-            <option value="month">Month</option>
-            <option value="year">Year</option>
-          </select>
-          <button id="selectorbtn" class="selector-btn">Show</button>
-        </div>
+      </div>
 
-        <div class="list-header">
-          <h1>Total Expense Amount : Rs.<span id="total-expense">0</span></h1>
-        </div>
-
+      <div class="pagination-div">
       </div>
 
       <div class="download-div"><button id="downloadexpenses" class="downloadexpenses" disabled>Download Expenses <i class="fa fa-download" aria-hidden="true"></i></button></div>

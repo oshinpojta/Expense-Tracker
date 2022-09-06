@@ -11,13 +11,15 @@ exports.getAllExpensesByUser = async (req, res, next) => {
     try{
         let userId = req.user.id;
         let expenseFormat = req.body.expenseFormat;
+        let offset = req.body.offset;
+        let limit = req.body.limit;
         let expenses = [];
         let expensePerDay = {};
         const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
         const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         if(expenseFormat == "day"){
             let previousdate = new Date(`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} 00:00:00`);
-            expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date());
+            expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date(), limit, offset);
             expensePerDay[0] = {
                 day : weekdays[new Date().getDay()],
                 expenses : expenses,
@@ -37,10 +39,10 @@ exports.getAllExpensesByUser = async (req, res, next) => {
                 month = 11;
             }
             let previousdate = new Date(`${new Date().getFullYear()}-${month}-${date} 00:00:00`);
-            expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date());
+            expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date(), limit, offset);
             for(let i=0;i<expenses.length;i++){
-                if(!expensePerDay[expenses[i].createdAt]){
-                    expensePerDay[expenses[i].createdAt] = {
+                if(!expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`]){
+                    expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`] = {
                         day : weekdays[expenses[i].createdAt.getDay()],
                         expenses : [expenses[i]],
                         date : expenses[i].createdAt.getDate(),
@@ -48,7 +50,7 @@ exports.getAllExpensesByUser = async (req, res, next) => {
                         year : expenses[i].createdAt.getFullYear()
                     }
                 }else{
-                    expensePerDay[expenses[i].createdAt].expenses.push(expenses[i]);
+                    expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`].expenses.push(expenses[i]);
                 }
             }
 
@@ -58,10 +60,10 @@ exports.getAllExpensesByUser = async (req, res, next) => {
                 month = 11;
             }
             let previousdate = new Date(`${new Date().getFullYear()}-${month}-${new Date().getDate()} 00:00:00`);
-            expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date());
+            expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date(), limit, offset);
             for(let i=0;i<expenses.length;i++){
-                if(!expensePerDay[expenses[i].createdAt]){
-                    expensePerDay[expenses[i].createdAt] = {
+                if(!expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`]){
+                    expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`] = {
                         day : weekdays[expenses[i].createdAt.getDay()],
                         expenses : [expenses[i]],
                         date : expenses[i].createdAt.getDate(),
@@ -69,17 +71,17 @@ exports.getAllExpensesByUser = async (req, res, next) => {
                         year : expenses[i].createdAt.getFullYear()
                     }
                 }else{
-                    expensePerDay[expenses[i].createdAt].expenses.push(expenses[i]);
+                    expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`].expenses.push(expenses[i]);
                 }
             }
 
         }else if(expenseFormat == "year"){
 
             let previousdate = new Date(`${new Date().getFullYear()-1}-${new Date().getMonth()}-${new Date().getDate()} 00:00:00`);
-            expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date());
+            expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date(), limit, offset);
             for(let i=0;i<expenses.length;i++){
-                if(!expensePerDay[expenses[i].createdAt]){
-                    expensePerDay[expenses[i].createdAt] = {
+                if(!expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`]){
+                    expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`] = {
                         day : weekdays[expenses[i].createdAt.getDay()],
                         expenses : [expenses[i]],
                         date : expenses[i].createdAt.getDate(),
@@ -87,14 +89,14 @@ exports.getAllExpensesByUser = async (req, res, next) => {
                         year : expenses[i].createdAt.getFullYear()
                     }
                 }else{
-                    expensePerDay[expenses[i].createdAt].expenses.push(expenses[i]);
+                    expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`].expenses.push(expenses[i]);
                 }
             }
         }
         
         //console.log(expensePerDay);
-        
-        res.json({success:true, data : expensePerDay});
+        let expenseCount = await expenseService.getCount(userId);
+        res.json({success:true, data : expensePerDay, expenseCount : expenseCount});
 
     }catch(err){
         console.log(err);

@@ -15,7 +15,9 @@ let options = {
         authorization : `${jwt_token}` 
     } 
 };
-
+let currentPageNumber = 1;
+let items_count = 10;
+let expenseFormat = "week";
 // function getCookies() {
 //     return document.cookie.split("; ").reduce(function(cookies, token){
 //         // split key=value into array
@@ -30,6 +32,80 @@ let options = {
 // function getCookie(name) {
 //     return getCookies()[name];
 // }
+
+let getAllExpensesResponse = async () => {
+    try {
+
+        let response = await axios.post(`${url}/expenses/get-all`, { expenseFormat : expenseFormat, limit : items_count, offset : currentPageNumber }, options);
+            if(response.data.success == false){
+                alert("ERROR : Something Went Wrong In Fetching Expenses!");
+            }else{
+                listDiv.innerHTML = ``;
+                let expensesPerDays = response.data.data;
+                let keys = Object.keys(expensesPerDays);
+                let totalExpense = 0;
+                if(expensesPerDays){
+                    for(let i=0; i<keys.length;i++){
+                        let obj = expensesPerDays[keys[i]];
+                        let expenses = obj.expenses;
+                        let day = obj.day;
+                        let date = obj.date;
+                        let month = obj.month;
+                        let year = obj.year;
+
+                        let textHtml = "";
+                        if(expenses){
+                            textHtml += `<h2 class='expense-basis-header'>${day}, ${date}-${month}-${year}</h2>`;
+                            for(let i=0;i<expenses.length;i++){
+                                let expense = expenses[i];
+                                totalExpense += expense.amount;
+                                textHtml += `<div id="list-item${expense.id}" class="list-item">
+                                                        <div class="list-hidden" style="display:none;">${expense.id}</div>
+                                                        <div class="list-category">${expense.category}</div>
+                                                        <div class="list-description">${expense.description}</div>
+                                                        <div class="list-amount">Rs.${expense.amount}</div>
+                                                        <button class="list-button-edit">Edit</button>
+                                                        <button class="list-button-delete">X</button>
+                                                    </div>`;
+                            }
+                        }
+                        listDiv.innerHTML += textHtml;
+                        document.querySelector("#total-expense").innerText = totalExpense;
+                    }
+
+                    let expenseCount = response.data.expenseCount;
+                    var paginationDiv = document.querySelector(".pagination-div");
+                    paginationDiv.innerHTML = "";
+                    let lastPage = Math.ceil(expenseCount/items_count);
+                    let i = currentPageNumber == 1? 1 : currentPageNumber-1;
+                    let n = currentPageNumber == 1? 3 : currentPageNumber+1;
+                    n = lastPage < n ? lastPage : n; 
+                    if(currentPageNumber>=3){
+                        paginationDiv.innerHTML += `<button class="pagination-btn" disabled>...</button>`
+                    }
+                    while(i<=n){
+                        if(i==currentPageNumber){
+                            paginationDiv.innerHTML += `<button id="currentPageNumber" class="pagination-btn" style="background-color:rgb(114, 10, 10);color:aliceblue;">${i}</button>`;
+                        }else{
+                            paginationDiv.innerHTML += `<button class="pagination-btn">${i}</button>`;
+                        }
+                        i++;
+                    }
+                    if(lastPage>n){
+                        paginationDiv.innerHTML += `<button class="pagination-btn" disabled>...</button>
+                                                    <button class="pagination-btn">${lastPage}</button>`;
+                    }
+                    
+                }else{
+                    textHtml += `<h2 class='expense-basis-header'>No Expenses To Show</h2>`;
+                    listDiv.innerHTML += textHtml;
+                }
+            }
+        
+    } catch (error) {
+        throw error;
+    }
+}
 
 
 const getClick = async (e) => {
@@ -70,10 +146,11 @@ const getClick = async (e) => {
                 let totalExpense = Number(document.querySelector("#total-expense").innerText);
                 totalExpense += Number(amountVal);
                 document.querySelector("#total-expense").innerText = totalExpense;
-                let day = weekdays[new Date(response.data.data.createdAt).getDay()];
-                let date = new Date(response.data.data.createdAt).getDate();
-                let month = months[new Date(response.data.data.createdAt).getMonth()];
-                let year = new Date(response.data.data.createdAt).getFullYear();
+                let thisDate = new Date(response.data.data.createdAt);
+                let day = weekdays[thisDate.getDay()];
+                let date = thisDate.getDate();
+                let month = months[thisDate.getMonth()];
+                let year = thisDate.getFullYear();
                 let textHtml = `<h2 class='expense-basis-header'>${day}, ${date}-${month}-${year}</h2>`;
                 textHtml += `<div id="list-item${expense.id}" class="list-item">
                                         <div class="list-hidden" style="display:none;">${expense.id}</div>
@@ -83,7 +160,9 @@ const getClick = async (e) => {
                                         <button class="list-button-edit">Edit</button>
                                         <button class="list-button-delete">X</button>
                                     </div>`;
-                listDiv.innerHTML += textHtml;
+                let tempText = listDiv.innerHTML;
+                listDiv.innerHTML = textHtml;
+                listDiv.innerHTML += tempText;
 
                 amount.value = "";
                 category.value = "Fuel";
@@ -302,59 +381,25 @@ const getClick = async (e) => {
         }
 
         if(e.target.id == "selectorbtn"){
-            let expenseFormat = document.querySelector("#expenseformat").value;
-            let response = await axios.post(`${url}/expenses/get-all`, { expenseFormat : expenseFormat }, options);
-            if(response.data.success == false){
-                alert("ERROR : Something Went Wrong In Fetching Expenses!");
-            }else{
-                listDiv.innerHTML = `<div class="format-selector-div" >
-                                        <select id="expenseformat" name="expenseformat" class="format-selector">
-                                        <option value="day">Day</option>
-                                        <option value="week">Week</option>
-                                        <option value="month">Month</option>
-                                        <option value="year">Year</option>
-                                        </select>
-                                        <button id="selectorbtn" class="selector-btn">Show</button>
-                                    </div>
-                            
-                                    <div class="list-header">
-                                        <h1>Total Expense Amount : Rs.<span id="total-expense">0</span></h1>
-                                    </div>`;
-                let expensesPerDays = response.data.data;
-                if(expensesPerDays){
-                    for(let iterator in expensesPerDays){
-                        let obj = expensesPerDays[iterator];
-                        let expenses = obj.expenses;
-                        let day = obj.day;
-                        let date = obj.date;
-                        let month = obj.month;
-                        let year = obj.year;
-            
-                        let totalExpense = 0;
-                        let textHtml = "";
-                        if(expenses){
-                            textHtml += `<h2 class='expense-basis-header'>${day}, ${date}-${month}-${year}</h2>`;
-                            for(let i=0;i<expenses.length;i++){
-                                let expense = expenses[i];
-                                totalExpense += expense.amount;
-                                textHtml += `<div id="list-item${expense.id}" class="list-item">
-                                                        <div class="list-hidden" style="display:none;">${expense.id}</div>
-                                                        <div class="list-category">${expense.category}</div>
-                                                        <div class="list-description">${expense.description}</div>
-                                                        <div class="list-amount">Rs.${expense.amount}</div>
-                                                        <button class="list-button-edit">Edit</button>
-                                                        <button class="list-button-delete">X</button>
-                                                    </div>`;
-                            }
-                        }
-                        listDiv.innerHTML += textHtml;
-                        document.querySelector("#total-expense").innerText = totalExpense;
-                    }
-                }else{
-                    textHtml += `<h2 class='expense-basis-header'>No Expenses To Show</h2>`;
-                    listDiv.innerHTML += textHtml;
-                }
-            }
+            expenseFormat = document.querySelector("#expenseformat").value;
+            document.querySelector("#expenseformat").value = expenseFormat;
+            document.querySelector("#count").value = items_count;
+            getAllExpensesResponse();
+        }
+
+        if(e.target.id == "countbtn"){
+            items_count = Number(document.querySelector("#count").value);
+            localStorage.setItem( "items_count", items_count);
+            document.querySelector("#expenseformat").value = expenseFormat;
+            document.querySelector("#count").value = items_count;
+            getAllExpensesResponse();
+        }
+
+        if(e.target.className == "pagination-btn"){
+            currentPageNumber = Number(e.target.innerText);
+            document.querySelector("#expenseformat").value = expenseFormat;
+            document.querySelector("#count").value = items_count;
+            getAllExpensesResponse();
         }
 
     }catch(error){
@@ -368,10 +413,15 @@ let loadExpenses = async (e) => {
     e.preventDefault();
     try {
         //console.log(sessionStorage.getItem('token'));
+        if(localStorage.getItem("items_count")!=null){
+            items_count = Number(localStorage.getItem("items_count"));
+        }
+        document.querySelector("#expenseformat").value = expenseFormat;
+        document.querySelector("#count").value = items_count;
         if(sessionStorage.getItem('token') == null){
             window.location.replace(`${url}/login.html`);
         }
-        let response = await axios.post(`${url}/expenses/get-all`, { expenseFormat : "week" }, options);
+        let response = await axios.post(`${url}/expenses/get-all`, { expenseFormat : "week", limit : items_count, offset : currentPageNumber }, options);
         if(response.data.success == false){
             //also delete user token in node app here - code
             sessionStorage.removeItem('token');
@@ -407,11 +457,12 @@ let loadExpenses = async (e) => {
 
         }
         // console.log(expensesPerDays);
+        let totalExpense = 0;
+        let textHtml = "";
+        let keys = Object.keys(expensesPerDays);
         if(expensesPerDays){
-            let totalExpense = 0;
-            let textHtml = "";
-            for(let iterator in expensesPerDays){
-                let obj = expensesPerDays[iterator];
+            for(let i=0; i<keys.length;i++){
+                let obj = expensesPerDays[keys[i]];
                 let expenses = obj.expenses;
                 let day = obj.day;
                 let date = obj.date;
@@ -439,6 +490,29 @@ let loadExpenses = async (e) => {
         }else{
             textHtml += `<h2 class='expense-basis-header'>No Expenses To Show</h2>`;
             listDiv.innerHTML += textHtml;
+        }
+
+        let expenseCount = response.data.expenseCount;
+        var paginationDiv = document.querySelector(".pagination-div");
+        paginationDiv.innerHTML = "";
+        let lastPage = Math.ceil(expenseCount/items_count);
+        let i = currentPageNumber == 1? 1 : currentPageNumber-1;
+        let n = currentPageNumber == 1? 3 : currentPageNumber+2;
+        n = lastPage < n ? lastPage : n; 
+        if(currentPageNumber>=3){
+            paginationDiv.innerHTML += `<button class="pagination-btn" disabled>...</button>`
+        }
+        while(i<=n){
+            if(i==currentPageNumber){
+                paginationDiv.innerHTML += `<button id="currentPageNumber" class="pagination-btn" style="background-color:rgb(114, 10, 10);color:aliceblue;">${1}</button>`;
+            }else{
+                paginationDiv.innerHTML += `<button class="pagination-btn">${i}</button>`;
+            }
+            i++;
+        }
+        if(lastPage>n){
+            paginationDiv.innerHTML += `<button class="pagination-btn" disabled>...</button>
+                                        <button class="pagination-btn">${lastPage}</button>`;
         }
         
         

@@ -15,7 +15,7 @@ body {
   background-color: rgb(251, 255, 0);
   background-position: center;
   background-repeat: no-repeat;
-  /* background-size: cover; */
+  background-size: cover;
 }
 
 .header {
@@ -206,7 +206,7 @@ label {
   display: block;
   border-radius: 10px;
   margin-top: 30px;
-  padding: 10px;
+  padding: 40px;
   justify-content: center;
   align-items: center;
   width: 700px;
@@ -215,19 +215,76 @@ label {
   background-color: rgba(0, 0, 0, 0.747);
 }
 
-#list-div h1 {
-  display: block;
+.list-header {
+  display: flex;
   color:bisque;
   margin: 30px;
   font-family: 'Bungee', cursive;
+  background-color: rgb(122, 11, 33);
+  border-radius: 15px;
 }
 
 #total {
   margin: 10px;
 }
 
-.format-selector-div{
+.settings-container{
   display: block;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: 20px;
+  background-color: #091950da;
+  border-radius: 10px;
+}
+
+.count-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.count{
+  width: 80px;
+  height: 30px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 900;
+  font-size: 17px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.count option {
+  width: 80px;
+  height: 30px;
+  color: antiquewhite;
+  background-color: black;
+  border: none;
+}
+
+.count-btn{
+  cursor: pointer;
+  border-radius: 3px;
+  width: 210px;
+  height: 30px;
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(255, 238, 0);
+  border: none;
+  color: black;
+  font-size: 17px;
+  font-weight: 600;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  transition: background-color 1s, color 1s;
+}
+
+.count-btn:hover{
+  background-color: rgb(19, 36, 3);
+  color: aliceblue;
+}
+
+.format-selector-div{
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -253,7 +310,7 @@ label {
 .selector-btn {
   cursor: pointer;
   border-radius: 3px;
-  width: 80px;
+  width: 210px;
   height: 30px;
   margin: 5px;
   padding: 5px;
@@ -262,7 +319,7 @@ label {
   color: black;
   font-size: 17px;
   font-weight: 600;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   transition: background-color 1s, color 1s;
 }
 
@@ -423,6 +480,34 @@ body.premium {
   color: rgb(255, 255, 255);
 }
 
+.pagination-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-btn{
+  cursor: pointer;
+  border-radius: 3px;
+  width: 80px;
+  height: 30px;
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(11, 221, 141);
+  border: none;
+  color: black;
+  font-size: 17px;
+  font-weight: 600;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  transition: background-color 1s, color 1s;
+}
+
+.pagination-btn:hover{
+  background-color: rgb(19, 36, 3);
+  color: aliceblue;
+}
+
 .download-div {
   display: flex;
   justify-content: center;
@@ -454,7 +539,6 @@ body.premium {
   width: 300px;
   height: 50px;
 }
-
 
 #list-urls-div {
   display: block;
@@ -505,8 +589,6 @@ body.premium {
   height: 80px;
   font-size: 19px;
 }
-
-
 
 .swal-overlay {
   background-color: rgba(255, 255, 255, 0.493);

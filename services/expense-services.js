@@ -4,13 +4,26 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 class ExpenseService{
 
-    getAllExpensesByUser = async (userId, startedDate, endDate) => {
+    getAllExpensesByUser = async (userId, startedDate, endDate, limit, pageOffset) => {
         try{
-            return await Expense.findAll({where : { userId : userId, createdAt : {[Op.between] : [startedDate , endDate]}}});  
+            return await Expense.findAll({where : { userId : userId, createdAt : {[Op.between] : [startedDate , endDate]}},
+                                            order : [['createdAt','DESC']],
+                                            offset:((pageOffset-1)*limit),
+                                            limit : limit,
+                                            subQuery:false
+                                        });  
         }catch(error){
             throw error;
         }
     };
+
+    getCount = async (userId) => {
+        try {
+            return await Expense.count({ where : { userId : userId}});
+        } catch (error) {
+            throw error;
+        }
+    }
     
     getExpense = async (expenseId) => {
         try {
