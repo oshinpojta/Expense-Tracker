@@ -1,8 +1,12 @@
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const jwt = require('jsonwebtoken');
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
 const dotenv = require("dotenv");
 dotenv.config();
 const sequelize = require("./utils/database");
@@ -15,11 +19,19 @@ const expenseRoutes = require("./routes/expense-routes");
 const membershipRoutes = require("./routes/memebership-routes");
 const forgotPasswordRequestRoutes = require("./routes/forgot-password-routes");
 
+const accessLogStream = fs.createWriteStream(
+    path.join(__dirname,"access.log"),
+    {flags : "a"}
+);
 
 const app = express();
 app.use(cors());
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", { stream : accessLogStream}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, `views`,`static`)));
+
 
 User.hasMany(Expense);
 User.hasOne(Membership);
@@ -73,5 +85,5 @@ app.use((req, res)=>{
 });
 
 sequelize.sync().then(() => {
-    app.listen(process.env.HOST_PORT);
+    app.listen(process.env.PORT || 4000);
 }).catch(err => console.log(err));
