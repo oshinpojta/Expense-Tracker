@@ -141,6 +141,7 @@ const getClick = async (e) => {
                     description : descriptionVal,
                     category : categoryVal
                 }
+                console.log(expenseObj);
                 response = await axios.put(`${url}/expenses/update`, expenseObj, options);
             }
             if(response.data.success == true){
