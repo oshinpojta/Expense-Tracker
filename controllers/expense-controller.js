@@ -162,7 +162,7 @@ exports.addExpense = async (req, res, next) => {
             description : expense.description, 
             category : expense.category
         });
-        console.log(result);
+        //console.log(result);
         res.json({success : true, data : result});
         
     } catch (error) {

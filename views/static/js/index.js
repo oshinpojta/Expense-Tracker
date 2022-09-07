@@ -16,7 +16,7 @@ let options = {
     } 
 };
 let currentPageNumber = 1;
-let items_count = 10;
+let items_count = 5;
 let expenseFormat = "week";
 // function getCookies() {
 //     return document.cookie.split("; ").reduce(function(cookies, token){
@@ -80,8 +80,10 @@ let getAllExpensesResponse = async () => {
                     let i = currentPageNumber == 1? 1 : currentPageNumber-1;
                     let n = currentPageNumber == 1? 3 : currentPageNumber+1;
                     n = lastPage < n ? lastPage : n; 
+                    i = currentPageNumber == lastPage ? currentPageNumber-2 : i;
                     if(currentPageNumber>=3){
-                        paginationDiv.innerHTML += `<button class="pagination-btn" disabled>...</button>`
+                        paginationDiv.innerHTML += `<button class="pagination-btn">${1}</button>
+                                                    <button class="pagination-btn" disabled>...</button>`;
                     }
                     while(i<=n){
                         if(i==currentPageNumber){
@@ -244,7 +246,7 @@ const getClick = async (e) => {
                 let order = response.data.data;
                 let willProceed = await swal({
                     title: `Order-id Created! : ${order.id}`,
-                    text: `Would You Like To Proceed!? Amount : ${order.amount}`,
+                    text: `Would You Like To Proceed!? Amount : ${order.amount/100}`,
                     icon: "success",
                     buttons: true,
                     dangerMode: true,
@@ -421,7 +423,7 @@ let loadExpenses = async (e) => {
         if(sessionStorage.getItem('token') == null){
             window.location.replace(`${url}/login.html`);
         }
-        let response = await axios.post(`${url}/expenses/get-all`, { expenseFormat : "week", limit : items_count, offset : currentPageNumber }, options);
+        let response = await axios.post(`${url}/expenses/get-all`, { expenseFormat : expenseFormat, limit : items_count, offset : currentPageNumber }, options);
         if(response.data.success == false){
             //also delete user token in node app here - code
             sessionStorage.removeItem('token');

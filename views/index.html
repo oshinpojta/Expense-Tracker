@@ -46,6 +46,11 @@
             </div>
           </form>
     </div>
+
+    <div class="list-header">
+      <h1>Total Expenses Amount : Rs.<span id="total-expense">0</span></h1>
+    </div>
+
     <div class="settings-container">
       <div class="format-selector-div" >
         <button id="selectorbtn" class="selector-btn">Show Items Based On</button>
@@ -59,16 +64,13 @@
       <div class="count-div">
         <button id="countbtn" class="count-btn">Set Items Count</button>
         <select id="count" name="count" class="count">
+          <option value="5">5</option>
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
       </div>
-    </div>
-
-    <div class="list-header">
-      <h1>Total Expense Amount : Rs.<span id="total-expense">0</span></h1>
     </div>
 
       <div id="list-div" class="list-div">
