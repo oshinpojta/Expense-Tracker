@@ -3,6 +3,7 @@ var description = document.getElementById('description');
 var category = document.getElementById('category');
 var hidden = document.querySelector("#hidden")
 var listDiv = document.getElementById('list-div');
+var usernameHeader = document.querySelector("#username");
 //let totalExpenseDiv = document.querySelector("#total-expense"); // ****ERROR : Causing PassByValue
 var msg = document.getElementById("msg");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -431,6 +432,7 @@ let loadExpenses = async (e) => {
             window.location.replace(`${url}/login.html`);
         }
         let expensesPerDays = response.data.data;  //array
+        usernameHeader.innerText = `Welcome, ${response.data.username}`;
         let premiumResponse = await axios.get(`${url}/membership/get`,options);
         if(premiumResponse.data.success == true){
             document.querySelector("body").classList.add("premium");

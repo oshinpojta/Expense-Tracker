@@ -19,7 +19,7 @@ exports.getAllExpensesByUser = async (req, res, next) => {
         let getAllExpensesByUserByExpenseFormat = [];
         const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
         const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-
+        let user = await userService.getUser(userId);
         if(expenseFormat == "day"){
             let previousdate = new Date(`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} 00:00:00`);
             expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date(), limit, offset);
@@ -106,7 +106,7 @@ exports.getAllExpensesByUser = async (req, res, next) => {
         }
         //console.log(expensePerDay);
         let expenseCount = await expenseService.getCount(userId);
-        res.json({success:true, data : expensePerDay, expenseCount : expenseCount, totalExpense : totalExpense});
+        res.json({success:true, data : expensePerDay, expenseCount : expenseCount, totalExpense : totalExpense, username : user.name});
 
     }catch(err){
         console.log(err);

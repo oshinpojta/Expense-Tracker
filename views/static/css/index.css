@@ -224,6 +224,15 @@ label {
   border-radius: 15px;
 }
 
+#username {
+  display: flex;
+  color:bisque;
+  margin: 20px;
+  font-family: 'Bungee', cursive;
+  /* background-color: rgb(122, 11, 33); */
+  border-radius: 15px;
+}
+
 #total {
   margin: 10px;
 }
