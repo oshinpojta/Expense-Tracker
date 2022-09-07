@@ -25,14 +25,9 @@ class ExpenseService{
         }
     };
 
-    getAllExpensesByUserByExpenseFormat = async (userId, expenseFormat) => {
+    getAllExpensesByUserByExpenseFormat = async (userId, startedDate, endDate) => {
         try{
-            return await Expense.findAll({where : { userId : userId, createdAt : {[Op.between] : [startedDate , endDate]}},
-                                            order : [['createdAt','DESC']],
-                                            offset:((pageOffset-1)*limit),
-                                            limit : limit,
-                                            subQuery:false
-                                        });  
+            return await Expense.findAll({where : { userId : userId, createdAt : {[Op.between] : [startedDate , endDate]}}});  
         }catch(error){
             throw error;
         }
