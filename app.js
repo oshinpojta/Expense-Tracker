@@ -31,7 +31,7 @@ app.use(helmet());
 // app.use(compression());
 app.use(morgan("combined", { stream : accessLogStream}));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, `views`,`static`)));
+app.use(express.static(path.join(__dirname, `views`)));
 
 // const privateKey = fs.readFileSync("server.key");
 // const certificate = fs.readFileSync("server.cert");
