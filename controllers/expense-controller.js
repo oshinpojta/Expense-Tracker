@@ -174,7 +174,7 @@ exports.addExpense = async (req, res, next) => {
 exports.updateExpense = async (req, res, next) => {
     try {
         let expense = req.body;
-        console.log(expense);
+        //console.log(expense);
         let result = await expenseService.updateExpense(expense);
         //console.log(result);
         res.json({success : true, data : result});

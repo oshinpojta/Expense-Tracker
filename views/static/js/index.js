@@ -80,7 +80,7 @@ let getAllExpensesResponse = async () => {
                     let i = currentPageNumber == 1? 1 : currentPageNumber-1;
                     let n = currentPageNumber == 1? 3 : currentPageNumber+1;
                     n = lastPage < n ? lastPage : n; 
-                    // i = currentPageNumber == lastPage && (lastPage!=1 || lastPage!=2) ? currentPageNumber-2 : i;
+                    i = currentPageNumber == lastPage && n>2 ? currentPageNumber-2 : i;
                     if(currentPageNumber>=3){
                         paginationDiv.innerHTML += `<button class="pagination-btn">${1}</button>
                                                     <button class="pagination-btn" disabled>...</button>`;
@@ -116,7 +116,7 @@ const getClick = async (e) => {
         if(e.target.className == "btn-primary"){
             document.querySelector(".is-editing").style.display = "none";
             let amountVal = amount.value;
-            let descriptionVal = document.querySelector('#description').value;
+            let descriptionVal = description.value;
             let categoryVal = category.value;
             if(amountVal==""){
                 msg.innerText = "Amount field cannot be empty!"
