@@ -73,5 +73,5 @@ app.use((req, res)=>{
 });
 
 sequelize.sync().then(() => {
-    app.listen(4000);
+    app.listen(process.env.HOST_PORT);
 }).catch(err => console.log(err));
