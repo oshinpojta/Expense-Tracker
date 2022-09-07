@@ -33,8 +33,8 @@ app.use(morgan("combined", { stream : accessLogStream}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, `views`,`static`)));
 
-const privateKey = fs.readFileSync("server.key");
-const certificate = fs.readFileSync("server.cert");
+// const privateKey = fs.readFileSync("server.key");
+// const certificate = fs.readFileSync("server.cert");
 
 
 User.hasMany(Expense);
