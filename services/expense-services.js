@@ -17,6 +17,14 @@ class ExpenseService{
         }
     };
 
+    getAllExpensesByUserNoQuery = async (userId) => {
+        try{
+            return await Expense.findAll({where : { userId : userId}});  
+        }catch(error){
+            throw error;
+        }
+    };
+
     getCount = async (userId) => {
         try {
             return await Expense.count({ where : { userId : userId}});

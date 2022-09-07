@@ -109,7 +109,7 @@ exports.getAllExpensesByAll = async (req, res, next) => {
         let users = await userService.getAllUsers();
         let leaderboard = [];
         for(let i=0;i<users.length;i++){
-            let expenses = await expenseService.getAllExpensesByUser(users[i].id);
+            let expenses = await expenseService.getAllExpensesByUserNoQuery(users[i].id);
             let totalExpense = 0;
             for(let j=0;j<expenses.length;j++){
                 totalExpense += expenses[j].amount;
