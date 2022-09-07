@@ -432,7 +432,7 @@ let loadExpenses = async (e) => {
             window.location.replace(`${url}/login.html`);
         }
         let expensesPerDays = response.data.data;  //array
-        usernameHeader.innerText = `Welcome, ${response.data.username}`;
+        usernameHeader.innerText = `Welcome! ${response.data.username}.`;
         let premiumResponse = await axios.get(`${url}/membership/get`,options);
         if(premiumResponse.data.success == true){
             document.querySelector("body").classList.add("premium");
