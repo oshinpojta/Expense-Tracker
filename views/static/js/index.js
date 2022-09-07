@@ -116,7 +116,7 @@ const getClick = async (e) => {
         if(e.target.className == "btn-primary"){
             document.querySelector(".is-editing").style.display = "none";
             let amountVal = amount.value;
-            let descriptionVal = document.getElementById('description').value;
+            let descriptionVal = document.querySelector('#description').value;
             let categoryVal = category.value;
             if(amountVal==""){
                 msg.innerText = "Amount field cannot be empty!"
