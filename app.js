@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const https = require("https");
 const fs = require("fs");
 const jwt = require('jsonwebtoken');
 const bodyParser = require("body-parser");
@@ -31,6 +32,9 @@ app.use(compression());
 app.use(morgan("combined", { stream : accessLogStream}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, `views`,`static`)));
+
+const privateKey = fs.readFileSync("server.key");
+const certificate = fs.readFileSync("server.cert");
 
 
 User.hasMany(Expense);
@@ -85,5 +89,6 @@ app.use((req, res)=>{
 });
 
 sequelize.sync().then(() => {
+    //https.createServer({key : privateKey, cert : certificate}, app).listen(process.env.PORT || 4000);
     app.listen(process.env.PORT || 4000);
 }).catch(err => console.log(err));

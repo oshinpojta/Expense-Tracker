@@ -420,7 +420,7 @@ let loadExpenses = async (e) => {
         }
         document.querySelector("#expenseformat").value = expenseFormat;
         document.querySelector("#count").value = items_count;
-        if(sessionStorage.getItem('token') == null){
+        if(!sessionStorage.getItem('token')){
             window.location.replace(`${url}/login.html`);
         }
         let response = await axios.post(`${url}/expenses/get-all`, { expenseFormat : expenseFormat, limit : items_count, offset : currentPageNumber }, options);
@@ -520,7 +520,7 @@ let loadExpenses = async (e) => {
         
     } catch (error) {
         console.log(error);
-        alert("Something Went Wrond! Check Console!");
+        alert("Something Went Wrond! Check Console and Reload!");
        // window.location.replace(`${url}/login.html`);
     }
 }
