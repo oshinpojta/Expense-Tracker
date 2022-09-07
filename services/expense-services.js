@@ -39,7 +39,7 @@ class ExpenseService{
             if(e){
                 return e.update({ 
                     amount : expense.amount, 
-                    descriptiom : expense.descriptiom, 
+                    description : expense.description, 
                     category : expense.category
                 });
             }
