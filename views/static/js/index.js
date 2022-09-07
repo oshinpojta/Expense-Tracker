@@ -1,10 +1,10 @@
-let amount = document.querySelector('#amount');
-let description = document.getElementById('description');
-let category = document.getElementById('category');
-let hidden = document.querySelector("#hidden")
-let listDiv = document.getElementById('list-div');
+var amount = document.querySelector('#amount');
+var description = document.getElementById('description');
+var category = document.getElementById('category');
+var hidden = document.querySelector("#hidden")
+var listDiv = document.getElementById('list-div');
 //let totalExpenseDiv = document.querySelector("#total-expense"); // ****ERROR : Causing PassByValue
-let msg = document.getElementById("msg");
+var msg = document.getElementById("msg");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
@@ -116,7 +116,7 @@ const getClick = async (e) => {
         if(e.target.className == "btn-primary"){
             document.querySelector(".is-editing").style.display = "none";
             let amountVal = amount.value;
-            let descriptionVal = description.value;
+            let descriptionVal = document.getElementById('description').value;
             let categoryVal = category.value;
             if(amountVal==""){
                 msg.innerText = "Amount field cannot be empty!"
