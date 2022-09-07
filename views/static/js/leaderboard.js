@@ -1,6 +1,6 @@
 let listDiv = document.getElementById('list-div');
 
-let url = "http://l54.159.134.29:4000";
+let url = "http://54.159.134.29:4000";
 let jwt_token = sessionStorage.getItem('token'); //getCookie('token')
 let options = { 
     headers : { 

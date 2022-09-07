@@ -8,7 +8,7 @@ let msg = document.getElementById("msg");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
-let url = "http://l54.159.134.29:4000";
+let url = "http://54.159.134.29:4000";
 let jwt_token = sessionStorage.getItem('token'); //getCookie('token')
 let options = { 
     headers : { 
