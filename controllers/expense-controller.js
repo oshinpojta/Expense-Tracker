@@ -15,11 +15,15 @@ exports.getAllExpensesByUser = async (req, res, next) => {
         let limit = req.body.limit;
         let expenses = [];
         let expensePerDay = {};
+        let totalExpense = 0;
+        let getAllExpensesByUserByExpenseFormat = [];
         const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
         const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
         if(expenseFormat == "day"){
             let previousdate = new Date(`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} 00:00:00`);
             expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date(), limit, offset);
+            getAllExpensesByUserByExpenseFormat = await expenseService.getAllExpensesByUserByExpenseFormat(users[i].id, previousdate, new Date());
             expensePerDay[0] = {
                 day : weekdays[new Date().getDay()],
                 expenses : expenses,
@@ -40,6 +44,7 @@ exports.getAllExpensesByUser = async (req, res, next) => {
             }
             let previousdate = new Date(`${new Date().getFullYear()}-${month}-${date} 00:00:00`);
             expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date(), limit, offset);
+            getAllExpensesByUserByExpenseFormat = await expenseService.getAllExpensesByUserByExpenseFormat(users[i].id, previousdate, new Date());
             for(let i=0;i<expenses.length;i++){
                 if(!expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`]){
                     expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`] = {
@@ -61,6 +66,7 @@ exports.getAllExpensesByUser = async (req, res, next) => {
             }
             let previousdate = new Date(`${new Date().getFullYear()}-${month}-${new Date().getDate()} 00:00:00`);
             expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date(), limit, offset);
+            getAllExpensesByUserByExpenseFormat = await expenseService.getAllExpensesByUserByExpenseFormat(users[i].id, previousdate, new Date());
             for(let i=0;i<expenses.length;i++){
                 if(!expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`]){
                     expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`] = {
@@ -79,6 +85,7 @@ exports.getAllExpensesByUser = async (req, res, next) => {
 
             let previousdate = new Date(`${new Date().getFullYear()-1}-${new Date().getMonth()}-${new Date().getDate()} 00:00:00`);
             expenses = await expenseService.getAllExpensesByUser(userId, previousdate, new Date(), limit, offset);
+            getAllExpensesByUserByExpenseFormat = await expenseService.getAllExpensesByUserByExpenseFormat(users[i].id, previousdate, new Date());
             for(let i=0;i<expenses.length;i++){
                 if(!expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`]){
                     expensePerDay[`${expenses[i].createdAt.getDate()}-${expenses[i].createdAt.getMonth()}-${expenses[i].createdAt.getFullYear()}`] = {
@@ -94,9 +101,12 @@ exports.getAllExpensesByUser = async (req, res, next) => {
             }
         }
         
+        for(let i=0;i<getAllExpensesByUserByExpenseFormat.length;i++){
+            totalExpense += getAllExpensesByUserByExpenseFormat[i].amount;
+        }
         //console.log(expensePerDay);
         let expenseCount = await expenseService.getCount(userId);
-        res.json({success:true, data : expensePerDay, expenseCount : expenseCount});
+        res.json({success:true, data : expensePerDay, expenseCount : expenseCount, totalExpense : totalExpense});
 
     }catch(err){
         console.log(err);

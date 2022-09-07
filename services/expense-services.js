@@ -25,6 +25,19 @@ class ExpenseService{
         }
     };
 
+    getAllExpensesByUserByExpenseFormat = async (userId, expenseFormat) => {
+        try{
+            return await Expense.findAll({where : { userId : userId, createdAt : {[Op.between] : [startedDate , endDate]}},
+                                            order : [['createdAt','DESC']],
+                                            offset:((pageOffset-1)*limit),
+                                            limit : limit,
+                                            subQuery:false
+                                        });  
+        }catch(error){
+            throw error;
+        }
+    }
+
     getCount = async (userId) => {
         try {
             return await Expense.count({ where : { userId : userId}});

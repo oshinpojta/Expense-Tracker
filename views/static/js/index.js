@@ -70,7 +70,7 @@ let getAllExpensesResponse = async () => {
                             }
                         }
                         listDiv.innerHTML += textHtml;
-                        document.querySelector("#total-expense").innerText = totalExpense;
+                        document.querySelector("#total-expense").innerText = response.data.totalExpense;
                     }
 
                     let expenseCount = response.data.expenseCount;
@@ -141,7 +141,7 @@ const getClick = async (e) => {
                     description : descriptionVal,
                     category : categoryVal
                 }
-                console.log(expenseObj);
+                //console.log(expenseObj);
                 response = await axios.put(`${url}/expenses/update`, expenseObj, options);
             }
             if(response.data.success == true){
@@ -489,7 +489,7 @@ let loadExpenses = async (e) => {
                 }
             }
             listDiv.innerHTML += textHtml;
-            document.querySelector("#total-expense").innerText = totalExpense;
+            document.querySelector("#total-expense").innerText = response.data.totalExpense;
         }else{
             textHtml += `<h2 class='expense-basis-header'>No Expenses To Show</h2>`;
             listDiv.innerHTML += textHtml;
